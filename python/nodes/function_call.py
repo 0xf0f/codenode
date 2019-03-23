@@ -14,8 +14,9 @@ class Call(CodeNode):
         if self.kwargs:
             if self.args:
                 arg_string += ', '
+
             arg_string += ', '.join(
-                map(lambda key, value: f'{key}={value}', self.kwargs.items())
+                f'{key}={value}' for key, value in self.kwargs.items()
             )
 
         yield f'{self.name}({arg_string})'
