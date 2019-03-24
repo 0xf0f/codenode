@@ -1,4 +1,4 @@
-from base import CodeNode
+from codenode.base import CodeNode
 from .pass_statement import Pass
 
 

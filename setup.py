@@ -1,10 +1,9 @@
-from setuptools import setup
+from setuptools import setup, find_packages
 
 setup(
     name='codenode',
     version='0.5',
-    packages=['', 'lua', 'lua.nodes', 'base', 'base.nodes', 'python',
-              'python.nodes'],
+    packages=find_packages(),
     url='https://github.com/0xf0f/codenode',
     license='MIT',
     author='0xf0f',

@@ -1,6 +1,6 @@
-from base import CodeNode
+from codenode.base import CodeNode
 from typing import List
-from base import Block
+from codenode.base import Block
 from .pass_statement import Pass
 
 

@@ -1,15 +1,15 @@
-from base import CodeNode
+from codenode.base import CodeNode
 from .pass_statement import Pass
 
 
-class For(CodeNode):
-    def __init__(self, expression):
+class While(CodeNode):
+    def __init__(self, condition):
         super().__init__()
 
-        self.expression = expression
+        self.condition = condition
 
     def header(self):
-        yield f'for {self.expression}:'
+        yield f'for {self.condition}:'
 
     def body(self):
         if self.children:
