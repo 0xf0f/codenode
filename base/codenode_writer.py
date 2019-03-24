@@ -1,38 +1,57 @@
 import io
-from base.nodes.codenode import CodeNode
+from base import CodeNode
+from typing import Union
+from functionality.constants import default_indent
+
+DumpStream = Union[io.StringIO, io.TextIOBase]
 
 
 class CodeNodeWriter:
     def __init__(self):
         pass
 
-    def node_to_lines(self, node: CodeNode, indent='    ', depth=0):
+    def node_to_lines(self, node: CodeNode):
         stack = [(node, 0, node.total())]
 
         while stack:
-            node, parent_child_depth_offset, iterator = stack[-1]
+            node, depth, iterator = stack[-1]
 
             try:
                 item = next(iterator)
 
             except StopIteration:
                 stack.pop()
-                depth -= parent_child_depth_offset
                 continue
 
             if isinstance(item, CodeNode):
-                stack.append((item, node.child_depth_offset, item.total()))
-                depth += node.child_depth_offset
+                stack.append(
+                    (item, depth+node.child_depth_offset, item.total())
+                )
                 continue
 
-            yield f'{indent*depth}{item}'
+            yield depth, item
 
-    def dump(self, node: CodeNode, stream: io.TextIOBase, indent='    ', depth=0):
-        for line in self.node_to_lines(node, indent, depth):
+    def dump(
+            self,
+            node: CodeNode,
+            stream: DumpStream,
+            indent=default_indent,
+            base_depth=0
+    ):
+        for depth, line in self.node_to_lines(node):
+            stream.write(indent*(depth+base_depth))
             stream.write(line)
             stream.write('\n')
 
-    def dumps(self, node: CodeNode, indent='    ', depth=0):
+    def dumps(
+            self,
+            node: CodeNode,
+            indent=default_indent,
+            base_depth=0
+    ):
         string_io = io.StringIO()
-        self.dump(node, string_io, indent, depth)
+        self.dump(node, string_io, indent, base_depth)
         return string_io.getvalue()
+
+
+writer = CodeNodeWriter()

@@ -1,4 +1,5 @@
 from base import CodeNode
+from .pass_statement import Pass
 
 
 class Function(CodeNode):
@@ -21,4 +22,9 @@ class Function(CodeNode):
         yield f'def {self.name}({arg_string}):'
 
     def body(self):
-        yield from self.children
+        if self.children:
+            yield from self.children
+
+        else:
+            yield Pass()
+
