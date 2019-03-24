@@ -2,6 +2,7 @@ from .class_definition import Class
 from .comment import Comment
 from .conditional import Conditional
 from .docstring import DocString
+from .for_loop import For
 from .function_call import Call
 from .function_definition import Function
 from .method import Method
