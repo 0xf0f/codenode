@@ -18,4 +18,3 @@ print(CodeNodeWriter().dumps(outer_conditional))
 from codenode import python
 
 print(python.Function('Test', 'poop', shit='poop').dumps())
-
