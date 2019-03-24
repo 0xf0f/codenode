@@ -14,3 +14,6 @@ outer_conditional = Conditional()
 outer_conditional.add_if('True').add_child(conditional)
 
 print(CodeNodeWriter().dumps(outer_conditional))
+
+import python
+print(python.Function('Test', 'poop', shit='poop').dumps())
