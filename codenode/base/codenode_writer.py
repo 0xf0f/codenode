@@ -1,7 +1,7 @@
 import io
-from base import CodeNode
+from codenode.base import CodeNode
 from typing import Union
-from functionality.constants import default_indent
+from codenode.functionality.constants import default_indent
 
 DumpStream = Union[io.StringIO, io.TextIOBase]
 

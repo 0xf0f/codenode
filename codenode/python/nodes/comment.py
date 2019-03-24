@@ -1,4 +1,4 @@
-from base import CodeNode
+from codenode.base import CodeNode
 
 
 class Comment(CodeNode):
