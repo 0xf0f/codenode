@@ -1,4 +1,4 @@
-from codenode import Block
+from .block import Block
 
 
 class File(Block):
