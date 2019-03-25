@@ -9,7 +9,15 @@ class Function(CodeNode):
         self.args = args
         self.kwargs = kwargs
 
+        self.decorators = []
+
+    def add_decorator(self, decorator):
+        self.decorators.append(decorator)
+
     def header(self):
+        for decorator in self.decorators:
+            yield f'@{decorator}'
+
         arg_string = ', '.join(self.args)
         if self.kwargs:
             if self.args:
