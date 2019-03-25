@@ -1,9 +1,7 @@
 from codenode.base import CodeNode
-from codenode.base import Block
-from .block import Block as CppBlock
 
 
-class Function(Block):
+class Function(CodeNode):
     def __init__(self, return_type, name, *args, **kwargs):
         super().__init__()
 
@@ -11,9 +9,6 @@ class Function(Block):
         self.name = name
         self.args = args
         self.kwargs = kwargs
-
-        self.block = CppBlock()
-        self.children.append(self.block)
 
     def header(self):
         arg_string = ', '.join(self.args)
@@ -26,6 +21,10 @@ class Function(Block):
             )
 
         yield f'{self.return_type} {self.name}({arg_string})'
+        yield '{'
 
-    def add_child(self, child: 'CodeNode'):
-        return self.block.add_child(child)
+    def body(self):
+        yield from self.children
+
+    def footer(self):
+        yield '}'
