@@ -9,7 +9,7 @@ class While(CodeNode):
         self.condition = condition
 
     def header(self):
-        yield f'for {self.condition}:'
+        yield f'while {self.condition}:'
 
     def body(self):
         if self.children:

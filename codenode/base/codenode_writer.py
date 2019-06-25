@@ -27,9 +27,9 @@ class CodeNodeWriter:
                 stack.append(
                     (item, depth+node.child_depth_offset, item.total())
                 )
-                continue
 
-            yield depth, item
+            else:
+                yield depth, item
 
     def dump(
             self,
@@ -38,7 +38,7 @@ class CodeNodeWriter:
             indent=default_indent,
             base_depth=0
     ):
-        for depth, line in self.node_to_lines(node):
+        for depth, line in node.to_lines():
             stream.write(indent*(depth+base_depth))
             stream.write(line)
             stream.write('\n')
