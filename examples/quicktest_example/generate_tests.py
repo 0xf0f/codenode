@@ -64,5 +64,5 @@ if __name__ == '__main__':
     print(generated_tests.dumps())
 
     # or to save to a file:
-    with open('generated_tests.py', 'w') as file:
+    with open('output.py', 'w') as file:
         generated_tests.dump(file)
