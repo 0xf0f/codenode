@@ -33,6 +33,9 @@ class CodeNode:
         yield from self.footer()
 
     def add_child(self, child: 'CodeNode'):
+        if isinstance(child, str):
+            from .line import Line
+            child = Line(child)
         self.children.append(child)
 
     # def remove_child(self, child: 'CodeNode'):
