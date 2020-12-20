@@ -7,5 +7,6 @@ class Line(Node):
 
         self.content = content
 
-    def body(self):
+    def header(self):
         yield self.content
+
