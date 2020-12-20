@@ -1,4 +1,3 @@
-from codenode.functionality.constants import default_indent
 from typing import List, Tuple
 
 codenode_subclasses = {}
@@ -45,11 +44,11 @@ class CodeNode:
         from codenode.base import default_writer
         yield from default_writer.node_to_lines(self)
 
-    def dump(self, stream, indent=default_indent, base_depth=0):
+    def dump(self, stream, indent=None, base_depth=0):
         from codenode.base import default_writer
         return default_writer.dump(self, stream, indent, base_depth)
 
-    def dumps(self, indent=default_indent, base_depth=0):
+    def dumps(self, indent=None, base_depth=0):
         from codenode.base import default_writer
         return default_writer.dumps(self, indent, base_depth)
 
