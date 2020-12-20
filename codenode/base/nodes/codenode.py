@@ -1,3 +1,4 @@
+# from codenode.util.iterator_stack import IteratorStack
 from typing import List, Union
 
 codenode_subclasses = {}
@@ -55,6 +56,28 @@ class CodeNode:
     def dumps(self, indent=None, base_depth=0):
         from codenode.base import default_writer
         return default_writer.dumps(self, indent, base_depth)
+
+    def walk(self, yield_self=False):
+        if yield_self:
+            stack = [self]
+        else:
+            stack = [*self.children]
+
+        while stack:
+            item = stack.pop()
+            yield item
+            stack.extend(item.children)
+
+        # stack = IteratorStack()
+        # stack.push(self.children)
+        #
+        # if yield_self:
+        #     yield self
+        #
+        # for node in stack:  # type: CodeNode
+        #     yield node
+        #     if node.children:
+        #         stack.push(node.children)
 
     def __call__(self, *children: Union[str, 'CodeNode']):
         self.add_children(*children)
