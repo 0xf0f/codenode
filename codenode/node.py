@@ -25,6 +25,12 @@ class Node:
         if isinstance(child, str):
             from .line import Line
             child = Line(child)
+
+        elif isinstance(child, (list, tuple)):
+            node = Node()
+            node.add_children(*child)
+            child = node
+
         self.children.append(child)
 
     # def remove_child(self, child: 'Node'):
