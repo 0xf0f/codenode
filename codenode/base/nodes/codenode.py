@@ -21,7 +21,7 @@ class CodeNode:
         yield from ()
 
     def body(self):
-        yield from ()
+        yield from self.children
 
     def footer(self):
         yield from ()
