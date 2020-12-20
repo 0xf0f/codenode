@@ -10,7 +10,7 @@ class DocString(CodeNode):
         yield '"""'
 
     def body(self):
-        yield from self.content.split('\n')
+        yield from self.content.splitlines()
 
     def footer(self):
         yield '"""'
