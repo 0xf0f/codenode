@@ -1,5 +1,10 @@
-from .base import CodeNode
-from .base import Line
-from .base import EmptyLines
-from .base import File
-from .base import Block
+from .node import Node
+from .block import Block
+from .empty_lines import EmptyLines
+from .file import File
+from .line import Line
+from .writer import CodeNodeWriter
+
+default_indent = '    '
+default_writer = CodeNodeWriter()
+
