@@ -1,6 +1,6 @@
 from typing import List, Tuple, Union
 
-NodeArgumentType = Union['Node', str, List['NodeArgumentType'], Tuple['NodeArgumentType']]
+NodeArgumentType = Union['Node', str, list, tuple]
 
 
 class Node:
