@@ -1,4 +1,3 @@
-# from codenode.util.iterator_stack import IteratorStack
 from typing import List, Union
 
 codenode_subclasses = {}
@@ -67,17 +66,6 @@ class CodeNode:
             item = stack.pop()
             yield item
             stack.extend(item.children)
-
-        # stack = IteratorStack()
-        # stack.push(self.children)
-        #
-        # if yield_self:
-        #     yield self
-        #
-        # for node in stack:  # type: CodeNode
-        #     yield node
-        #     if node.children:
-        #         stack.push(node.children)
 
     def __call__(self, *children: Union[str, 'CodeNode']):
         self.add_children(*children)
