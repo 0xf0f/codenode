@@ -31,7 +31,7 @@ class CodeNode:
         yield from self.body()
         yield from self.footer()
 
-    def add_child(self, child: 'CodeNode'):
+    def add_child(self, child: Union[str, 'CodeNode']):
         if isinstance(child, str):
             from .line import Line
             child = Line(child)
