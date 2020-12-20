@@ -6,9 +6,6 @@ DumpStream = Union[io.StringIO, io.TextIOBase]
 
 
 class CodeNodeWriter:
-    def __init__(self):
-        pass
-
     def node_to_lines(self, node: CodeNode):
         stack = [(node, 0, node.total())]
 
