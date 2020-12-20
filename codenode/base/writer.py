@@ -54,4 +54,4 @@ class CodeNodeWriter:
         return string_io.getvalue()
 
 
-writer = CodeNodeWriter()
+default_writer = CodeNodeWriter()

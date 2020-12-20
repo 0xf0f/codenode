@@ -42,14 +42,14 @@ class CodeNode:
     #     self.children.remove(child)
 
     def to_lines(self):
-        from codenode.base import writer
-        yield from writer.node_to_lines(self)
+        from codenode.base import default_writer
+        yield from default_writer.node_to_lines(self)
 
     def dump(self, stream, indent=default_indent, base_depth=0):
-        from codenode.base import writer
-        return writer.dump(self, stream, indent, base_depth)
+        from codenode.base import default_writer
+        return default_writer.dump(self, stream, indent, base_depth)
 
     def dumps(self, indent=default_indent, base_depth=0):
-        from codenode.base import writer
-        return writer.dumps(self, indent, base_depth)
+        from codenode.base import default_writer
+        return default_writer.dumps(self, indent, base_depth)
 
