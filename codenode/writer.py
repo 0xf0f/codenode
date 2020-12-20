@@ -1,12 +1,12 @@
 import io
-from codenode.base import CodeNode
+from .node import Node
 from typing import Union
 
 DumpStream = Union[io.StringIO, io.TextIOBase]
 
 
 class CodeNodeWriter:
-    def node_to_lines(self, node: CodeNode):
+    def node_to_lines(self, node: Node):
         stack = [(node, 0, node.total())]
 
         while stack:
@@ -19,7 +19,7 @@ class CodeNodeWriter:
                 stack.pop()
                 continue
 
-            if isinstance(item, CodeNode):
+            if isinstance(item, Node):
                 stack.append(
                     (item, depth+node.child_depth_offset, item.total())
                 )
@@ -29,13 +29,13 @@ class CodeNodeWriter:
 
     def dump(
             self,
-            node: CodeNode,
+            node: Node,
             stream: DumpStream,
             indent=None,
             base_depth=0
     ):
         if indent is None:
-            from codenode.util.constants import default_indent
+            from . import default_indent
             indent = default_indent
 
         for depth, line in node.to_lines():
@@ -45,13 +45,10 @@ class CodeNodeWriter:
 
     def dumps(
             self,
-            node: CodeNode,
+            node: Node,
             indent=None,
             base_depth=0
     ):
         string_io = io.StringIO()
         self.dump(node, string_io, indent, base_depth)
         return string_io.getvalue()
-
-
-default_writer = CodeNodeWriter()

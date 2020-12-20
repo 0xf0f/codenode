@@ -1,7 +1,7 @@
-from .codenode import CodeNode
+from .node import Node
 
 
-class EmptyLines(CodeNode):
+class EmptyLines(Node):
     def __init__(self, count=1):
         super().__init__()
         self.count = count

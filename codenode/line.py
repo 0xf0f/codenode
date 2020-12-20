@@ -1,7 +1,7 @@
-from .codenode import CodeNode
+from .node import Node
 
 
-class Line(CodeNode):
+class Line(Node):
     def __init__(self, content=''):
         super().__init__()
 
