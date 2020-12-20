@@ -1,4 +1,6 @@
-from typing import List, Union
+from typing import List, Tuple, Union
+
+NodeArgumentType = Union['Node', str, List['NodeArgumentType'], Tuple['NodeArgumentType']]
 
 
 class Node:
@@ -21,7 +23,7 @@ class Node:
         yield from self.body()
         yield from self.footer()
 
-    def add_child(self, child: Union[str, 'Node']):
+    def add_child(self, child: NodeArgumentType):
         if isinstance(child, str):
             from .line import Line
             child = Line(child)
@@ -33,10 +35,7 @@ class Node:
 
         self.children.append(child)
 
-    # def remove_child(self, child: 'Node'):
-    #     self.children.remove(child)
-
-    def add_children(self, *children: Union[str, 'Node']):
+    def add_children(self, *children: NodeArgumentType):
         for child in children:
             self.add_child(child)
 
@@ -63,6 +62,6 @@ class Node:
             yield item
             stack.extend(item.children)
 
-    def __call__(self, *children: Union[str, 'Node']):
+    def __call__(self, *children: NodeArgumentType):
         self.add_children(*children)
         return self
