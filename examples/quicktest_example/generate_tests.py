@@ -35,8 +35,15 @@ def generate_class_tests(cls):
     for name, method in inspect.getmembers(
             cls, predicate=inspect.isroutine
     ):
-        test_function = py.Function(f'test_{name}', 'instance')
+        test_function = py.Function(f'test_{name}', f'instance: {cls.__name__}')
         test_function.add_decorator(f'{test_list_name}.test')
+        test_function.add_child(
+            py.DocString(
+                f'Test method for {cls.__name__}.{name}\n'
+                'If no exception is raised then the test succeeds'
+            )
+        )
+        test_function.add_child(py.Pass())
 
         comment = py.Comment(test_function.dumps())
 

@@ -7,5 +7,5 @@ class Comment(CodeNode):
         self.content = content
 
     def body(self):
-        for line in self.content.split('\n'):
+        for line in self.content.splitlines():
             yield f'# {line}'
