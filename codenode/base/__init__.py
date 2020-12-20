@@ -1,4 +1,4 @@
 from .nodes import *
 
-from .codenode_writer import CodeNodeWriter
-from .codenode_writer import writer
+from .writer import CodeNodeWriter
+from .writer import default_writer
