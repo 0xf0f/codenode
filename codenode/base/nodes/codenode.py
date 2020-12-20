@@ -40,6 +40,10 @@ class CodeNode:
     # def remove_child(self, child: 'CodeNode'):
     #     self.children.remove(child)
 
+    def add_children(self, *children: Union[str, 'CodeNode']):
+        for child in children:
+            self.add_child(child)
+
     def to_lines(self):
         from codenode.base import default_writer
         yield from default_writer.node_to_lines(self)
