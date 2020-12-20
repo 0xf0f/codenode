@@ -56,3 +56,6 @@ class CodeNode:
         from codenode.base import default_writer
         return default_writer.dumps(self, indent, base_depth)
 
+    def __call__(self, *children: Union[str, 'CodeNode']):
+        self.add_children(*children)
+        return self
