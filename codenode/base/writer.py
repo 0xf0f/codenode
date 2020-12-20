@@ -1,7 +1,6 @@
 import io
 from codenode.base import CodeNode
 from typing import Union
-from codenode.functionality.constants import default_indent
 
 DumpStream = Union[io.StringIO, io.TextIOBase]
 
@@ -35,8 +34,13 @@ class CodeNodeWriter:
             self,
             node: CodeNode,
             stream: DumpStream,
+            indent=None,
             base_depth=0
     ):
+        if indent is None:
+            from codenode.util.constants import default_indent
+            indent = default_indent
+
         for depth, line in node.to_lines():
             stream.write(indent*(depth+base_depth))
             stream.write(line)
@@ -45,7 +49,7 @@ class CodeNodeWriter:
     def dumps(
             self,
             node: CodeNode,
-            indent=default_indent,
+            indent=None,
             base_depth=0
     ):
         string_io = io.StringIO()
