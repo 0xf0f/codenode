@@ -7,6 +7,6 @@ setup(
     url='https://github.com/0xf0f/codenode',
     license='MIT',
     author='0xf0f',
-    author_email='',
-    description='A simple module for code generation.'
+    author_email='0x0meta@gmail.com',
+    description='A module for simplified code and structured text generation.'
 )
