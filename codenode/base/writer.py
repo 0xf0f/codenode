@@ -35,7 +35,6 @@ class CodeNodeWriter:
             self,
             node: CodeNode,
             stream: DumpStream,
-            indent=default_indent,
             base_depth=0
     ):
         for depth, line in node.to_lines():
