@@ -25,7 +25,6 @@ class Node:
 
     def add_child(self, child: NodeArgumentType) -> 'Node':
         if isinstance(child, str):
-            from .line import Line
             child = Line(child)
 
         elif isinstance(child, (list, tuple)):
@@ -66,3 +65,14 @@ class Node:
     def __call__(self, *children: NodeArgumentType):
         self.add_children(*children)
         return self
+
+
+class Line(Node):
+    def __init__(self, content=''):
+        super().__init__()
+
+        self.content = content
+
+    def header(self):
+        yield self.content
+
