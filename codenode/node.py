@@ -23,7 +23,7 @@ class Node:
         yield from self.body()
         yield from self.footer()
 
-    def add_child(self, child: NodeArgumentType):
+    def add_child(self, child: NodeArgumentType) -> 'Node':
         if isinstance(child, str):
             from .line import Line
             child = Line(child)
@@ -34,6 +34,7 @@ class Node:
             child = node
 
         self.children.append(child)
+        return child
 
     def add_children(self, *children: NodeArgumentType):
         for child in children:
