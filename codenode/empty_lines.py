@@ -6,6 +6,6 @@ class EmptyLines(Node):
         super().__init__()
         self.count = count
 
-    def body(self):
+    def header(self):
         for i in range(self.count):
             yield ''
