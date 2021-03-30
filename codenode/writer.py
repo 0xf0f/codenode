@@ -43,7 +43,7 @@ class Writer:
         if indent is None:
             indent = settings.default_indent
 
-        for depth, line in node.to_lines():
+        for depth, line in self.node_to_lines(node):
             stream.write(indent*(depth+base_depth))
             stream.write(line)
             stream.write('\n')
