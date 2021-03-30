@@ -5,8 +5,8 @@ from .settings import settings
 
 DumpStream = Union[io.StringIO, io.TextIOBase]
 
+class Writer:
 
-class CodeNodeWriter:
     def node_to_lines(self, node: Node):
         stack = [(node, 0, node.total())]
 
