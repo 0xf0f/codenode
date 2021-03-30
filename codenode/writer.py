@@ -1,13 +1,14 @@
 import io
-from .node import Node
-from typing import Union
-from .settings import settings
+from typing import Iterator, Tuple
 
-DumpStream = Union[io.StringIO, io.TextIOBase]
+from .node import Node
+from .settings import settings
+from .constants import HasStringWriteMethod
+
 
 class Writer:
 
-    def node_to_lines(self, node: Node):
+    def node_to_lines(self, node: Node) -> Iterator[Tuple[int, str]]:
         stack = [(node, 0, node.total())]
 
         while stack:
@@ -31,10 +32,10 @@ class Writer:
     def dump(
             self,
             node: Node,
-            stream: DumpStream,
+            stream: HasStringWriteMethod,
             indent: str = None,
             base_depth=0
-    ):
+    ) -> None:
         if indent is None:
             indent = settings.default_indent
 
@@ -46,9 +47,9 @@ class Writer:
     def dumps(
             self,
             node: Node,
-            indent=None,
+            indent: str = None,
             base_depth=0
-    ):
+    ) -> str:
         string_io = io.StringIO()
         self.dump(node, string_io, indent, base_depth)
         return string_io.getvalue()

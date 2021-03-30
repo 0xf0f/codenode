@@ -1,7 +1,7 @@
-from typing import List, Tuple, Union
-
-NodeArgumentType = Union['Node', str, list, tuple]
+from typing import List, Tuple, Union, Iterator
 from .settings import settings
+from .constants import HasStringWriteMethod
+from .constants import NodeArgumentType
 
 
 class Node:
@@ -10,16 +10,16 @@ class Node:
     def __init__(self):
         self.children: List[Node] = []
 
-    def header(self):
+    def header(self) -> Iterator[Union['Node', str]]:
         yield from ()
 
-    def body(self):
+    def body(self) -> Iterator[Union['Node', str]]:
         yield from self.children
 
-    def footer(self):
+    def footer(self) -> Iterator[Union['Node', str]]:
         yield from ()
 
-    def total(self):
+    def total(self) -> Iterator[Union['Node', str]]:
         yield from self.header()
         yield from self.body()
         yield from self.footer()
@@ -40,16 +40,16 @@ class Node:
         for child in children:
             self.add_child(child)
 
-    def to_lines(self):
+    def to_lines(self) -> Iterator[Tuple[int, str]]:
         yield from settings.default_writer.node_to_lines(self)
 
-    def dump(self, stream, indent=None, base_depth=0):
+    def dump(self, stream: HasStringWriteMethod, indent: str = None, base_depth=0):
         return settings.default_writer.dump(self, stream, indent, base_depth)
 
-    def dumps(self, indent=None, base_depth=0):
+    def dumps(self, indent: str = None, base_depth=0) -> str:
         return settings.default_writer.dumps(self, indent, base_depth)
 
-    def walk(self, yield_self=False):
+    def walk(self, yield_self=False) -> Iterator[Union['Node', str]]:
         if yield_self:
             stack = [self]
         else:
