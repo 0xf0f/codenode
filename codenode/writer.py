@@ -7,8 +7,11 @@ from .constants import HasStringWriteMethod
 
 
 class Writer:
+    def process_node(self, node: Node) -> Node:
+        return node
 
     def node_to_lines(self, node: Node) -> Iterator[Tuple[int, str]]:
+        node = self.process_node(node)
         stack = [(node, 0, node.total())]
 
         while stack:
@@ -22,6 +25,7 @@ class Writer:
                 continue
 
             if isinstance(item, Node):
+                item = self.process_node(item)
                 stack.append(
                     (item, depth+node.child_depth_offset, item.total())
                 )
