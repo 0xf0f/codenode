@@ -1,6 +1,7 @@
 from typing import List, Tuple, Union
 
 NodeArgumentType = Union['Node', str, list, tuple]
+from .settings import settings
 
 
 class Node:
@@ -40,16 +41,13 @@ class Node:
             self.add_child(child)
 
     def to_lines(self):
-        from . import default_writer
-        yield from default_writer.node_to_lines(self)
+        yield from settings.default_writer.node_to_lines(self)
 
     def dump(self, stream, indent=None, base_depth=0):
-        from . import default_writer
-        return default_writer.dump(self, stream, indent, base_depth)
+        return settings.default_writer.dump(self, stream, indent, base_depth)
 
     def dumps(self, indent=None, base_depth=0):
-        from . import default_writer
-        return default_writer.dumps(self, indent, base_depth)
+        return settings.default_writer.dumps(self, indent, base_depth)
 
     def walk(self, yield_self=False):
         if yield_self:
