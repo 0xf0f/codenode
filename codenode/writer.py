@@ -27,7 +27,11 @@ class Writer:
             if isinstance(item, Node):
                 item = self.process_node(item)
                 stack.append(
-                    (item, depth+node.child_depth_offset, item.total())
+                    (
+                        item,
+                        depth+node.child_depth_offset,
+                        item.total()
+                    )
                 )
 
             else:
