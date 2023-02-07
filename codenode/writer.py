@@ -2,8 +2,6 @@ import io
 from typing import Iterator, Tuple
 
 from .node import Node
-from .settings import settings
-from .constants import HasStringWriteMethod
 
 
 class Writer:
@@ -40,12 +38,12 @@ class Writer:
     def dump(
             self,
             node: Node,
-            stream: HasStringWriteMethod,
+            stream,
             indent: str = None,
             base_depth=0
     ) -> None:
         if indent is None:
-            indent = settings.default_indent
+            indent = '    '
 
         for depth, line in self.node_to_lines(node):
             stream.write(indent*(depth+base_depth))

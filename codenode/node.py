@@ -1,8 +1,4 @@
 from typing import List, Tuple, Union, Iterator
-from .settings import settings
-from .constants import HasStringWriteMethod
-from .constants import NodeArgumentType
-
 
 class Node:
     child_depth_offset = 1
@@ -24,7 +20,7 @@ class Node:
         yield from self.body()
         yield from self.footer()
 
-    def add_child(self, child: NodeArgumentType) -> 'Node':
+    def add_child(self, child) -> 'Node':
         if isinstance(child, str):
             child = Line(child)
 
@@ -36,18 +32,9 @@ class Node:
         self.children.append(child)
         return child
 
-    def add_children(self, *children: NodeArgumentType):
+    def add_children(self, *children):
         for child in children:
             self.add_child(child)
-
-    def to_lines(self) -> Iterator[Tuple[int, str]]:
-        yield from settings.default_writer.node_to_lines(self)
-
-    def dump(self, stream: HasStringWriteMethod, indent: str = None, base_depth=0):
-        return settings.default_writer.dump(self, stream, indent, base_depth)
-
-    def dumps(self, indent: str = None, base_depth=0) -> str:
-        return settings.default_writer.dumps(self, indent, base_depth)
 
     def walk(self, yield_self=False) -> Iterator[Union['Node', str]]:
         if yield_self:
@@ -60,7 +47,7 @@ class Node:
             yield item
             stack.extend(item.children)
 
-    def __call__(self, *children: NodeArgumentType):
+    def __call__(self, *children):
         self.add_children(*children)
         return self
 
