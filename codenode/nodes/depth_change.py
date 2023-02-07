@@ -10,6 +10,9 @@ class RelativeDepthChange(DepthChange):
     def new_depth_for(self, depth: int) -> int:
         return depth + self.offset
 
+    def __repr__(self):
+        return f'<RelativeDepthChange {self.offset:+}>'
+
 
 class AbsoluteDepthChange(DepthChange):
     def __init__(self, value: int):
@@ -17,4 +20,7 @@ class AbsoluteDepthChange(DepthChange):
 
     def new_depth_for(self, depth: int) -> int:
         return self.value
+
+    def __repr__(self):
+        return f'<AbsoluteDepthChange {self.value}>'
 

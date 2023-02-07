@@ -1,2 +1,3 @@
 class Newline:
-    pass
+    def __repr__(self):
+        return '<Newline>'

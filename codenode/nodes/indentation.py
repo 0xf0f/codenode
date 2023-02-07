@@ -10,6 +10,9 @@ class RelativeIndentation(Indentation):
     def indents_for(self, depth: int) -> int:
         return depth + self.offset
 
+    def __repr__(self):
+        return f'<RelativeIndentation {self.offset:+}>'
+
 
 class AbsoluteIndentation(Indentation):
     def __init__(self, value: int):
@@ -18,7 +21,13 @@ class AbsoluteIndentation(Indentation):
     def indents_for(self, depth: int) -> int:
         return self.value
 
+    def __repr__(self):
+        return f'<RelativeIndentation {self.value}>'
+
 
 class CurrentIndentation(Indentation):
     def indents_for(self, depth: int) -> int:
         return depth
+
+    def __repr__(self):
+        return f'<Indentation>'
