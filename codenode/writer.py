@@ -1,61 +1,55 @@
-import io
-from typing import Iterator, Tuple
+import typing
 
-from .node import Node
+from .nodes.newline import Newline
+from .nodes.indentation import Indentation
+from .nodes.depth_change import DepthChange
+
+if typing.TYPE_CHECKING:
+    from typing import Union, Iterable
+    NodeType = Iterable[Union[str, 'NodeType']]
 
 
 class Writer:
-    def process_node(self, node: Node) -> Node:
-        return node
+    def __init__(
+            self,
+            node: 'NodeType', *,
+            indentation='    ',
+            newline='\n',
+            depth=0
+    ):
+        self.node = node
+        self.indentation = indentation
+        self.newline = newline
+        self.depth = depth
 
-    def node_to_lines(self, node: Node) -> Iterator[Tuple[int, str]]:
-        node = self.process_node(node)
-        stack = [(node, 0, node.total())]
-
+    def node_to_text(self, node: 'NodeType') -> 'Iterable[str]':
+        stack = [iter(node)]
         while stack:
-            node, depth, iterator = stack[-1]
-
             try:
-                item = next(iterator)
-
+                item = next(stack[-1])
             except StopIteration:
                 stack.pop()
                 continue
 
-            if isinstance(item, Node):
-                item = self.process_node(item)
-                stack.append(
-                    (
-                        item,
-                        depth+node.child_depth_offset,
-                        item.total()
-                    )
-                )
+            for item in self.process_node(item):
+                if isinstance(item, str):
+                    yield item
+                else:
+                    stack.append(iter(item))
 
-            else:
-                yield depth, item
+    def process_node(self, node):
+        if isinstance(node, DepthChange):
+            self.depth = node.new_depth_for(self.depth)
+        elif isinstance(node, Indentation):
+            yield self.indentation * node.indents_for(self.depth)
+        elif isinstance(node, Newline):
+            yield self.newline
+        else:
+            yield node
 
-    def dump(
-            self,
-            node: Node,
-            stream,
-            indent: str = None,
-            base_depth=0
-    ) -> None:
-        if indent is None:
-            indent = '    '
+    def dump(self, stream):
+        for chunk in self.node_to_text(self.node):
+            stream.write(chunk)
 
-        for depth, line in self.node_to_lines(node):
-            stream.write(indent*(depth+base_depth))
-            stream.write(line)
-            stream.write('\n')
-
-    def dumps(
-            self,
-            node: Node,
-            indent: str = None,
-            base_depth=0
-    ) -> str:
-        string_io = io.StringIO()
-        self.dump(node, string_io, indent, base_depth)
-        return string_io.getvalue()
+    def dumps(self):
+        return ''.join(self.node_to_text(self.node))
