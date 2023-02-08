@@ -2,7 +2,7 @@ import typing
 
 from .nodes.newline import Newline
 from .nodes.indentation import Indentation
-from .nodes.depth_change import DepthChange
+from .nodes.depth_change import DepthChange, DepthChangePush, DepthChangePop
 
 if typing.TYPE_CHECKING:
     from typing import Union, Iterable
@@ -26,16 +26,16 @@ class Writer:
         stack = [iter(node)]
         while stack:
             try:
-                item = next(stack[-1])
+                node = next(stack[-1])
             except StopIteration:
                 stack.pop()
                 continue
 
-            for item in self.process_node(item):
-                if isinstance(item, str):
-                    yield item
+            for node in self.process_node(node):
+                if isinstance(node, str):
+                    yield node
                 else:
-                    stack.append(iter(item))
+                    stack.append(iter(node))
 
     def process_node(self, node):
         if isinstance(node, DepthChange):
