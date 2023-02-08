@@ -23,7 +23,7 @@ class Writer:
         self.depth = depth
 
     def node_to_text(self, node: 'NodeType') -> 'Iterable[str]':
-        stack = [iter(node)]
+        stack = [iter((node,))]
         while stack:
             try:
                 node = next(stack[-1])
