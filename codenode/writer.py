@@ -41,6 +41,21 @@ class Writer:
             yield from self.process_node(node)
 
     def process_node(self, node) -> 'Iterable[str]':
+        """
+        yield strings representing a node and/or apply any of its
+        associated side effects to the writer
+
+        for example:
+
+        - yield indentation string when an indentation node is encountered
+
+        - increase the current writer depth if an indent is encountered
+
+        - append an iterator to the stack when an iterable is encountered
+
+        :param node: node to be processed
+        :returns: strings of text chunks representing the node
+        """
         if isinstance(node, str):
             yield node
         elif isinstance(node, DepthChange):
