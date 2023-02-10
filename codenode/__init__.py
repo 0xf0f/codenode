@@ -14,8 +14,16 @@ def line(content: str):
     return indentation, content, newline
 
 
+def lines(*items):
+    return tuple(map(line, items))
+
+
 def empty_lines(count: int):
     return (newline,) * count
+
+
+def indented(*nodes):
+    return indent, nodes, dedent
 
 
 def dump(
@@ -47,8 +55,8 @@ def dumps(
 
 
 __all__ = [
-    'indent', 'dedent',
+    'indent', 'dedent', 'indented',
     'indentation', 'newline',
-    'line', 'empty_lines',
+    'line', 'lines', 'empty_lines',
     'dump', 'dumps'
 ]
