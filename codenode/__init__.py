@@ -10,7 +10,7 @@ indentation = CurrentIndentation()
 newline = Newline()
 
 
-def line(content: str):
+def line(content):
     return indentation, content, newline
 
 
