@@ -36,9 +36,8 @@ class Writer:
                 node = next(self.stack[-1])
             except StopIteration:
                 self.stack.pop()
-                continue
-
-            yield from self.process_node(node)
+            else:
+                yield from self.process_node(node)
 
     def process_node(self, node) -> 'Iterable[str]':
         """
