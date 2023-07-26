@@ -1,3 +1,4 @@
+import io
 import typing
 
 from .nodes.newline import Newline
@@ -27,17 +28,17 @@ class Writer:
 
         self.auto_coerce = auto_coerce
 
-    def get_text_chunks(self) -> 'Iterable[str]':
-        self.stack.clear()
-        self.stack.append(iter((self.node,)))
-
-        while self.stack:
-            try:
-                node = next(self.stack[-1])
-            except StopIteration:
-                self.stack.pop()
-            else:
-                yield from self.process_node(node)
+    # def get_text_chunks(self) -> 'Iterable[str]':
+    #     self.stack.clear()
+    #     self.stack.append(iter((self.node,)))
+    #
+    #     while self.stack:
+    #         try:
+    #             node = next(self.stack[-1])
+    #         except StopIteration:
+    #             self.stack.pop()
+    #         else:
+    #             yield from self.process_node(node)
 
     def process_node(self, node) -> 'Iterable[str]':
         """
@@ -78,8 +79,20 @@ class Writer:
                     )
 
     def dump(self, stream):
-        for chunk in self.get_text_chunks():
-            stream.write(chunk)
+        self.stack.clear()
+        self.stack.append(iter((self.node,)))
+
+        while self.stack:
+            try:
+                node = next(self.stack[-1])
+            except StopIteration:
+                self.stack.pop()
+            else:
+                for chunk in self.process_node(node):
+                    stream.write(chunk)
 
     def dumps(self):
-        return ''.join(self.get_text_chunks())
+        buffer = io.StringIO()
+        self.dump(buffer)
+        return buffer.getvalue()
+
