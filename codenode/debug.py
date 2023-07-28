@@ -16,8 +16,8 @@ class DebugIterator:
         return self
 
     def __next__(self):
-        self.items_yielded += 1
         self.current_item = next(self.iterator)
+        self.items_yielded += 1
         if not isinstance(self.current_item, str):
             try:
                 self.current_item = DebugIterator(self.current_item)
