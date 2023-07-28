@@ -22,7 +22,7 @@ class AbsoluteIndentation(Indentation):
         return self.value
 
     def __repr__(self):
-        return f'<RelativeIndentation {self.value}>'
+        return f'<AbsoluteIndentation {self.value}>'
 
 
 class CurrentIndentation(Indentation):
