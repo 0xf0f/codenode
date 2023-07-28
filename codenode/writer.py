@@ -17,7 +17,6 @@ class Writer:
             indentation='    ',
             newline='\n',
             depth=0,
-            auto_coerce=False,
     ):
         self.node = node
         self.stack: list['Iterator'] = list()
@@ -25,8 +24,6 @@ class Writer:
         self.indentation = indentation
         self.newline = newline
         self.depth = depth
-
-        self.auto_coerce = auto_coerce
 
     def process_node(self, node) -> 'Iterable[str]':
         """
@@ -56,15 +53,12 @@ class Writer:
             try:
                 self.stack.append(iter(node))
             except TypeError:
-                if self.auto_coerce:
-                    yield str(node)
-                else:
-                    raise TypeError(
-                        f'Unable to process node "{node}".\n'
-                        'Either convert it to a string, iterable or '
-                        'override Writer.process_node to handle nodes '
-                        'of this type.'
-                    )
+                raise TypeError(
+                    f'Unable to process node "{node}".\n'
+                    'Either convert it to a string, iterable or '
+                    'override Writer.process_node to handle nodes '
+                    'of this type.'
+                )
 
     def dump(self, stream):
         self.stack.clear()
