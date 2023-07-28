@@ -52,13 +52,13 @@ class Writer:
         else:
             try:
                 self.stack.append(iter(node))
-            except TypeError:
+            except TypeError as error:
                 raise TypeError(
                     f'Unable to process node "{node}".\n'
                     'Either convert it to a string, iterable or '
                     'override Writer.process_node to handle nodes '
                     'of this type.'
-                )
+                ) from error
 
     def dump(self, stream):
         self.stack.clear()
