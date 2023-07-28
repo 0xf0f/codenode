@@ -31,14 +31,15 @@ def print_writer_stack(writer: Writer, stream):
         stream.write(f'Node #{index}: ')
 
         if isinstance(iterator, DebugIterator):
-            stream.write(f'({iterator.items_yielded} items processed)\n')
+            stream.write(f'({iterator.items_yielded-1} items processed)\n')
 
             pprint.pprint(
                 iterator.iterable,
                 stream=stream,
-                depth=1,
+                depth=2,
                 compact=False,
                 indent=2,
+                width=128,
             )
         else:
             stream.write(repr(iterator))
