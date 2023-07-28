@@ -2,6 +2,7 @@ from .writer import Writer
 from .nodes.depth_change import RelativeDepthChange
 from .nodes.indentation import CurrentIndentation
 from .nodes.newline import Newline
+from .debug import DebugWriter
 
 
 indent = RelativeDepthChange(1)
@@ -31,8 +32,14 @@ def dump(
         indentation='    ',
         newline='\n',
         depth=0,
+        debug=False,
 ):
-    return Writer(
+    if debug:
+        writer_type = DebugWriter
+    else:
+        writer_type = Writer
+
+    return writer_type(
         node,
         indentation=indentation,
         newline=newline,
@@ -45,8 +52,14 @@ def dumps(
         indentation='    ',
         newline='\n',
         depth=0,
+        debug=False,
 ):
-    return Writer(
+    if debug:
+        writer_type = DebugWriter
+    else:
+        writer_type = Writer
+
+    return writer_type(
         node,
         indentation=indentation,
         newline=newline,
