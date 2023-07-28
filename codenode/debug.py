@@ -1,51 +1,8 @@
-import copy
 import io
 import pprint
 import typing
 
-# from contextlib import contextmanager
 from .writer import Writer
-
-
-# class DebugNode:
-#     pass
-
-
-# @contextmanager
-# def debug(writer: 'Writer'):
-#     try:
-#         yield writer
-#     except Exception as e:
-#         pass
-#
-#         self.debug = debug
-#
-#         if self.debug:
-#             original_process_node = self.process_node
-#
-#             def debug_process_node(node):
-#                 try:
-#                     yield from original_process_node(node)
-#                 except Exception as e:
-#                     traceback = io.StringIO()
-#                     traceback.write(''.join(map(str, e.args)))
-#                     traceback.write('\n\nWriter stack:\n')
-#                     for index, iterator in enumerate(self.stack[1:]):
-#                         iterator: DebugIterator
-#                         traceback.write(f'Node #{index}: ({iterator.items_yielded} items processed)\n')
-#                         pprint.pprint(
-#                             iterator.iterable,
-#                             traceback,
-#                             depth=1,
-#                             compact=False,
-#                             indent=2,
-#                         )
-#                         traceback.write('\n')
-#                     traceback.write(f'Processing item: {iterator.current_item}')
-#                     e.args = (traceback.getvalue(),)
-#                     raise
-#
-#             self.process_node = debug_process_node
 
 
 class DebugIterator:
@@ -68,10 +25,6 @@ class DebugIterator:
                 pass
         return self.current_item
 
-
-# class DebugStack(WriterStack):
-#     def push(self, node):
-#         self.append(DebugIterator(node))
 
 def print_writer_stack(writer: Writer, stream):
     for index, iterator in enumerate(writer.stack[1:]):
@@ -119,4 +72,3 @@ def debug_patch(writer_type: typing.Type[Writer]):
 
 
 DebugWriter = debug_patch(Writer)
-
