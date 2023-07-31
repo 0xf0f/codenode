@@ -72,5 +72,5 @@ __all__ = [
     'indent', 'dedent', 'indented',
     'indentation', 'newline',
     'line', 'lines', 'empty_lines',
-    'dump', 'dumps'
+    'dump', 'dumps', 'default_writer_type',
 ]
