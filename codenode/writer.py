@@ -1,3 +1,4 @@
+import collections
 import io
 import typing
 
@@ -6,8 +7,26 @@ from .nodes.indentation import Indentation
 from .nodes.depth_change import DepthChange
 
 if typing.TYPE_CHECKING:
-    from typing import Union, Iterable, Iterator
+    from typing import Union, Iterable
     NodeType = Iterable[Union[str, 'NodeType']]
+
+
+class WriterStack:
+    def __init__(self):
+        self.items = collections.deque()
+
+    def push(self, node: 'NodeType'):
+        self.items.append(iter(node))
+
+    def clear(self):
+        self.items.clear()
+
+    def __iter__(self) -> 'Iterable[NodeType]':
+        while self.items:
+            try:
+                yield next(self.items[-1])
+            except StopIteration:
+                self.items.pop()
 
 
 class Writer:
@@ -19,7 +38,7 @@ class Writer:
             depth=0,
     ):
         self.node = node
-        self.stack: list['Iterator'] = list()
+        self.stack: WriterStack = WriterStack()
 
         self.indentation = indentation
         self.newline = newline
@@ -51,7 +70,7 @@ class Writer:
             yield self.newline
         else:
             try:
-                self.stack.append(iter(node))
+                self.stack.push(node)
             except TypeError as error:
                 raise TypeError(
                     f'Unable to process node "{node}".\n'
@@ -62,16 +81,11 @@ class Writer:
 
     def dump(self, stream):
         self.stack.clear()
-        self.stack.append(iter((self.node,)))
+        self.stack.push((self.node,))
 
-        while self.stack:
-            try:
-                node = next(self.stack[-1])
-            except StopIteration:
-                self.stack.pop()
-            else:
-                for chunk in self.process_node(node):
-                    stream.write(chunk)
+        for node in self.stack:
+            for chunk in self.process_node(node):
+                stream.write(chunk)
 
     def dumps(self):
         buffer = io.StringIO()
