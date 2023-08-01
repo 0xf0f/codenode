@@ -38,7 +38,7 @@ class Writer:
             depth=0,
     ):
         self.node = node
-        self.stack: WriterStack = WriterStack()
+        self.stack = WriterStack()
 
         self.indentation = indentation
         self.newline = newline
