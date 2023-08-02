@@ -18,9 +18,6 @@ class WriterStack:
     def push(self, node: 'NodeType'):
         self.items.append(iter(node))
 
-    def clear(self):
-        self.items.clear()
-
     def __iter__(self) -> 'Iterable[NodeType]':
         while self.items:
             try:
@@ -39,6 +36,7 @@ class Writer:
     ):
         self.node = node
         self.stack = WriterStack()
+        self.stack.push((node,))
 
         self.indentation = indentation
         self.newline = newline
@@ -80,9 +78,6 @@ class Writer:
                 ) from error
 
     def dump(self, stream):
-        self.stack.clear()
-        self.stack.push((self.node,))
-
         for node in self.stack:
             for chunk in self.process_node(node):
                 stream.write(chunk)
