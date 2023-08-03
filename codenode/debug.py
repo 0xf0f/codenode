@@ -4,7 +4,7 @@ import io
 import pprint
 import typing
 
-from .writer import Writer
+from .writer import Writer, WriterStack
 
 
 class DebugIterator:
@@ -51,7 +51,7 @@ def print_writer_stack(writer: Writer, stream):
                 pretty_print(iterator.iterable)
             stream.write(
                 f'  last {len(iterator.item_buffer)} items processed: '
-                f'({iterator.items_yielded} total items processed)\n'
+                f'({iterator.items_yielded} total)\n'
             )
             for item in iterator.item_buffer:
                 stream.write('    ')
@@ -65,11 +65,15 @@ def print_writer_stack(writer: Writer, stream):
 
 def debug_patch(writer_type: typing.Type[Writer]):
     class PatchedWriter(writer_type):
-        def __init__(self, *args, **kwargs):
-            super().__init__(*args, **kwargs)
+        @property
+        def stack(self):
+            return self._stack
 
-            push = self.stack.push
-            self.stack.push = lambda node: push(DebugIterator(node))
+        @stack.setter
+        def stack(self, stack: WriterStack):
+            push = stack.push
+            stack.push = lambda node: push(DebugIterator(node))
+            self._stack = stack
 
         def dump(self, stream):
             try:
