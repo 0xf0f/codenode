@@ -152,6 +152,7 @@ Some modules with helper classes and functions are also provided:
 ### Reference
 > **Note**
 > This section of the readme was generated using codenode itself.
+> 
 > See docs/generate_readme.py
 
 ${reference}
