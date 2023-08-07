@@ -149,4 +149,9 @@ Some modules with helper classes and functions are also provided:
     - helpers for code that relies on the old codenode API (below version 1.0)
     - uses a previous, entirely different approach to nodes
 
+### Reference
+> **Note**
+> This section of the readme was generated using codenode itself.
+> See docs/generate_readme.py
+
 ${reference}
