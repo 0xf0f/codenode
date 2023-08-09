@@ -199,8 +199,8 @@ class DocumentationContent:
     def get_link(self):
         return '-'.join(
             re.sub(
-                r'[^A-Za-z]+', ' ',
-                self.path.lower()
+                r'\s+', '-',
+                self.path.lower().translate(str.maketrans({'.': None}))
             ).strip().split()
         )
 
