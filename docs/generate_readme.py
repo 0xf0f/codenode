@@ -7,8 +7,8 @@ import textwrap
 import types
 import typing
 
-import codenode_utilities.prefixer
 from codenode import line, dumps, dump
+from codenode_utilities import prefixer
 
 docstring_regex = re.compile(
     r'(?P<param>:param (?P<param_name>.+): (?P<param_description>[^:]+))|'
@@ -213,7 +213,7 @@ class DocumentationContent:
 
 from codenode import line, dumps, newline, lines, indent, dedent, indentation
 
-quote_block = codenode_utilities.prefixer('> ')
+quote_block = prefixer('> ')
 
 
 def function_param_docs(params: dict):
