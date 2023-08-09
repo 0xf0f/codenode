@@ -1,5 +1,11 @@
-### What is this?
+### Contents
+- [What is this?](#what-is-this)
+- [How do I install it?](#how-do-i-install-it)
+- [How do I use it?](#how-do-i-use-it)
+- [Extensions](#extensions)
+- [Reference](#reference)
 
+### What is this?
 The goal of this module is to help write code that generates code. 
 Focus is placed on enabling the user to easily describe, 
 build and reason about code structures rapidly.
@@ -14,11 +20,21 @@ build and reason about code structures rapidly.
 `pip install git+https://github.com/0xf0f/codenode`
 
 ### How do I use it?
+Like the `json` and 
+`pickle` modules, `dump` and `dumps` are used to generate output. 
 Code can be built using any tree of iterables containing strings, 
-indentation nodes and newline nodes. Like the `json` and `pickle` 
-modules, `dump` and `dumps` are used to generate output.
+indentation nodes and newline nodes.
 
-Here's a simple example:
+For example, the built-in `line` function returns a tuple:
+
+```python
+from codenode import indentation, newline
+
+def line(content):
+    return indentation, content, newline
+```
+
+Which we can combine with `indent` and `dedent` nodes:
 
 ```python
 from codenode import line, indent, dedent, dumps
@@ -34,13 +50,6 @@ def counting_function(count_from, count_to):
         dedent,
     ]
 
-# line is a convenience function that returns a tuple containing:
-# - an indentation node
-#       (placeholder for configurable indentation characters)
-# - line content
-# - and a newline node 
-#       (placeholder for configurable newline characters)
-
 print(dumps(counting_function(0, 5)))
 ```
 
@@ -54,21 +63,11 @@ def count_from_0_to_5():
     print(4)
 ```
 
-Leveraging python's iteration protocol like this allows:
-- Mixing and matching whatever fits the use case to maximize tradeoffs, 
-such as using generators for their memory efficiency, 
-custom iterable classes for their semantics, or plain old lists and 
-tuples for their simplicity.
-- Taking advantage of existing modules that offer tooling for 
-iterables, such as itertools.
-- Building higher level structures from as many iterable building blocks
-as desired.
-
-Carrying on from the previous example, what if we want to count to an 
-extremely high number, like 1,000,000?
-It would be inefficient to store all the lines in memory
-at once. We can use a generator to break them down into individual parts 
-instead:
+But what if we want to count to a really big number, like 
+1,000,000,000,000,000?
+It would be inefficient to store all those lines in memory
+at once. We can use a generator to break them down into 
+individual parts instead:
 
 ```python
 from codenode import indent, dedent, newline, indentation, dump
@@ -84,7 +83,7 @@ def counting_function_generator(count_from, count_to):
     yield dedent
 
 with open('code.py', 'w') as file:
-    dump(counting_function_generator(0, 1_000_000), file)
+    dump(counting_function_generator(0, 1_000_000_000_000_000), file)
 ```
 
 We can also build a class with an `__iter__` method:
@@ -110,7 +109,8 @@ with open('code.py', 'w') as file:
     dump(CountingFunction(0, 1_000_000), file)
 ```
 
-Or build a more generalized function class:
+Or a more generalized function class:
+
 ```python
 class Function:
     def __init__(self, name, *args):
@@ -131,6 +131,17 @@ class CountingFunction(Function):
         for i in range(count_from, count_to):
             self.children.append(line(f'print({i})'))
 ```
+
+Leveraging python's iteration protocol like this allows:
+- Mixing and matching whatever fits the use case to maximize tradeoffs, 
+such as using generators for their memory efficiency, 
+custom iterable classes for their semantics, or plain old lists and 
+tuples for their simplicity.
+- Taking advantage of existing modules that offer tooling for 
+iterables, such as itertools.
+- Building higher level structures from as many iterable building blocks
+as desired.
+
 ### Extensions
 Module behaviour can be extended by overriding methods of the 
 `codenode.writer.Writer` and `codenode.writer.WriterStack` classes. An
@@ -155,4 +166,498 @@ Some modules with helper classes and functions are also provided:
 > 
 > See docs/generate_readme.py
 
-${reference}
+#### Contents
+- [codenode.dump](#codenode-dump)
+- [codenode.dumps](#codenode-dumps)
+- [codenode.line](#codenode-line)
+- [codenode.indent](#codenode-indent)
+- [codenode.dedent](#codenode-dedent)
+- [codenode.newline](#codenode-newline)
+- [codenode.indentation](#codenode-indentation)
+- [codenode.lines](#codenode-lines)
+- [codenode.empty_lines](#codenode-empty-lines)
+- [codenode.indented](#codenode-indented)
+- [codenode.default_writer_type](#codenode-default-writer-type)
+- [codenode.writer.Writer](#codenode-writer-writer)
+- [codenode.writer.WriterStack](#codenode-writer-writerstack)
+- [codenode.nodes.newline.Newline](#codenode-nodes-newline-newline)
+- [codenode.nodes.depth_change.DepthChange](#codenode-nodes-depth-change-depthchange)
+- [codenode.nodes.depth_change.RelativeDepthChange](#codenode-nodes-depth-change-relativedepthchange)
+- [codenode.nodes.depth_change.AbsoluteDepthChange](#codenode-nodes-depth-change-absolutedepthchange)
+- [codenode.nodes.indentation.Indentation](#codenode-nodes-indentation-indentation)
+- [codenode.nodes.indentation.RelativeIndentation](#codenode-nodes-indentation-relativeindentation)
+- [codenode.nodes.indentation.AbsoluteIndentation](#codenode-nodes-indentation-absoluteindentation)
+- [codenode.nodes.indentation.CurrentIndentation](#codenode-nodes-indentation-currentindentation)
+- [codenode.debug.debug_patch](#codenode-debug-debug-patch)
+
+
+---
+### codenode.dump
+
+> ```python
+> def dump(node, stream, *, indentation='    ', newline='\n', depth=0, debug=False): ...
+> ````
+> 
+> Process and write out a node tree to a stream.
+> 
+> 
+> #### Parameters
+> * > ***node:*** 
+>   > Base node of node tree.
+> * > ***stream:*** 
+>   > An object with a 'write' method.
+> * > ***indentation:*** 
+>   > String used for indents in the output.
+> * > ***newline:*** 
+>   > String used for newlines in the output.
+> * > ***depth:*** 
+>   > Base depth (i.e. number of indents) to start at.
+> * > ***debug:*** 
+>   > If True, will print out extra info when an error
+>   >                   occurs to give a better idea of which node caused it.
+
+---
+### codenode.dumps
+
+> ```python
+> def dumps(node, *, indentation='    ', newline='\n', depth=0, debug=False) -> str: ...
+> ````
+> 
+> Process and write out a node tree as a string.
+> 
+> 
+> #### Parameters
+> * > ***node:*** 
+>   > Base node of node tree.
+> * > ***indentation:*** 
+>   > String used for indents in the output.
+> * > ***newline:*** 
+>   > String used for newlines in the output.
+> * > ***depth:*** 
+>   > Base depth (i.e. number of indents) to start at.
+> * > ***debug:*** 
+>   > If True, will print out extra info when an error
+>   >                   occurs to give a better idea of which node caused it.
+>   > 
+> #### Returns
+> * > String representation of node tree.
+
+
+---
+### codenode.line
+
+> ```python
+> def line(content: 'T') -> 'tuple[Indentation, T, Newline]': ...
+> ````
+> 
+> Convenience function that returns a tuple containing
+> an indentation node, line content and a newline node.
+> 
+> 
+> #### Parameters
+> * > ***content:*** 
+>   > content of line
+> #### Returns
+> * > tuple containing an indentation node, line content and
+             a newline node.
+
+
+---
+### codenode.indent
+
+
+> A node representing a single increase in indentation level.
+
+---
+### codenode.dedent
+
+
+> A node representing a single decrease in indentation level.
+
+---
+### codenode.newline
+
+
+> A placeholder node for line terminators.
+
+---
+### codenode.indentation
+
+
+> A placeholder node for indentation whitespace at the start of a line.
+
+---
+### codenode.lines
+
+> ```python
+> def lines(*items) -> tuple[tuple, ...]: ...
+> ````
+> 
+> Convenience function that returns a tuple of lines,
+> where each argument is the content of one line.
+> 
+> 
+> #### Parameters
+> * > ***items:*** 
+>   > contents of lines
+> #### Returns
+> * > tuple of lines
+
+
+---
+### codenode.empty_lines
+
+> ```python
+> def empty_lines(count: int) -> 'tuple[Newline, ...]': ...
+> ````
+> 
+> 
+> :param count:
+> :return:
+> 
+
+---
+### codenode.indented
+
+> ```python
+> def indented(*nodes) -> tuple: ...
+> ````
+> 
+> 
+> :param nodes:
+> :return:
+> 
+
+---
+### codenode.default_writer_type
+
+
+> Default Writer type used in codenode.dump and codenode.dumps.
+
+---
+### codenode.writer.Writer
+
+> ```python
+> class Writer: ...
+> ```
+> 
+> Processes node trees into strings then writes out the result.
+> 
+> Each instance is intended to be used once then discarded.
+> After a single call to either dump or dumps, the Writer
+> instance is no longer useful.
+#### Methods
+> ##### `__init__`
+> ```python
+> class Writer:
+>     def __init__(self, node: 'NodeType', *, indentation='    ', newline='\n', depth=0): ...
+> ````
+> 
+> 
+> #### Parameters
+> * > ***node:*** 
+>   > Base node of node tree.
+> * > ***indentation:*** 
+>   > Initial string used for indents in the output.
+> * > ***newline:*** 
+>   > Initial string used for newlines in the output.
+> * > ***depth:*** 
+>   > Base depth (i.e. number of indents) to start at.
+
+> ##### `process_node`
+> ```python
+> class Writer:
+>     def process_node(self, node) -> 'Iterable[str]': ...
+> ````
+> 
+> Yield strings representing a node and/or apply any of its
+> associated side effects to the writer
+> 
+> for example:
+> 
+> - yield indentation string when an indentation node is encountered
+> 
+> - increase the current writer depth if an indent is encountered
+> 
+> - append an iterator to the stack when an iterable is encountered
+> 
+> 
+> #### Parameters
+> * > ***node:*** 
+>   > node to be processed
+> #### Returns
+> * > strings of text chunks representing the node
+
+
+> ##### `dump`
+> ```python
+> class Writer:
+>     def dump(self, stream): ...
+> ````
+> 
+> Process and write out a node tree to a stream.
+> 
+> 
+> #### Parameters
+> * > ***stream:*** 
+>   > An object with a 'write' method.
+
+> ##### `dumps`
+> ```python
+> class Writer:
+>     def dumps(self): ...
+> ````
+> 
+> Process and write out a node tree as a string.
+> 
+> 
+> #### Returns
+> * > String representation of node tree.
+
+
+#### Attributes
+> ***node:*** 
+> Base node of node tree
+
+> ***stack:*** 
+> WriterStack used to iterate over the node tree
+
+> ***indentation:*** 
+> Current string used for indents in the output
+
+> ***newline:*** 
+> Current string used for line termination in the output
+
+> ***depth:*** 
+> Current output depth (i.e. number of indents)
+
+---
+### codenode.writer.WriterStack
+
+> ```python
+> class WriterStack: ...
+> ```
+> 
+> A stack of iterators.
+> Used by the Writer class to traverse node trees.
+> 
+> Each instance is intended to be used once then discarded.
+#### Methods
+> ##### `push`
+> ```python
+> class WriterStack:
+>     def push(self, node: 'NodeType'): ...
+> ````
+> 
+> Converts a node to an iterator then places it at
+> the top of the stack.
+> 
+> 
+> #### Parameters
+> * > ***node:*** 
+>   > thing
+
+> ##### `__iter__`
+> ```python
+> class WriterStack:
+>     def __iter__(self) -> 'Iterable[NodeType]': ...
+> ````
+> 
+> Continually iterates the top iterator in the stack's item,
+> popping each iterator off when they have no items left.
+> 
+
+#### Attributes
+> ***items:*** collections.deque - 
+> Current items in the stack.
+
+---
+### codenode.nodes.newline.Newline
+
+> ```python
+> class Newline: ...
+> ```
+> 
+> Nodes that represent the end of a line.
+---
+### codenode.nodes.depth_change.DepthChange
+
+> ```python
+> class DepthChange: ...
+> ```
+> 
+> Nodes that represent a change in indentation depth.
+#### Methods
+> ##### `new_depth_for`
+> ```python
+> class DepthChange:
+>     def new_depth_for(self, depth: int) -> int: ...
+> ````
+> 
+> Method used to calculate the new depth based on the current one.
+> 
+> 
+> #### Parameters
+> * > ***depth:*** 
+>   > Current depth.
+> #### Returns
+> * > New depth.
+
+
+---
+### codenode.nodes.depth_change.RelativeDepthChange
+
+> ```python
+> class RelativeDepthChange: ...
+> ```
+> 
+> Nodes that represent a change in indentation depth relative to the
+> current depth by some preset amount.
+#### Methods
+> ##### `__init__`
+> ```python
+> class RelativeDepthChange:
+>     def __init__(self, offset: int): ...
+> ````
+> 
+> 
+> #### Parameters
+> * > ***offset:*** 
+>   > Amount by which to increase/decrease depth.
+
+#### Attributes
+> ***offset:*** 
+> Amount by which to increase/decrease depth when this node is
+>     processed.
+
+---
+### codenode.nodes.depth_change.AbsoluteDepthChange
+
+> ```python
+> class AbsoluteDepthChange: ...
+> ```
+> 
+> Nodes that represent a change in indentation depth without taking
+> the current depth into account.
+#### Methods
+> ##### `__init__`
+> ```python
+> class AbsoluteDepthChange:
+>     def __init__(self, value: int): ...
+> ````
+> 
+> 
+> #### Parameters
+> * > ***value:*** 
+>   > Value to set depth to.
+
+#### Attributes
+> ***value:*** 
+> Value to which depth will be set to when this node is
+>     processed.
+
+---
+### codenode.nodes.indentation.Indentation
+
+> ```python
+> class Indentation: ...
+> ```
+> 
+> Nodes that represent indentation whitespace at the start of a line.
+#### Methods
+> ##### `indents_for`
+> ```python
+> class Indentation:
+>     def indents_for(self, depth: int) -> int: ...
+> ````
+> 
+> 
+> #### Parameters
+> * > ***depth:*** 
+>   > Current depth.
+> #### Returns
+> * > Number of indents to include in whitespace when this
+        node is processed.
+
+
+---
+### codenode.nodes.indentation.RelativeIndentation
+
+> ```python
+> class RelativeIndentation: ...
+> ```
+> 
+> Nodes that represent indentation whitespace at the start of a line,
+> with a number of indents relative to the current depth by some
+> preset amount.
+#### Methods
+> ##### `__init__`
+> ```python
+> class RelativeIndentation:
+>     def __init__(self, offset: int): ...
+> ````
+> 
+> 
+> #### Parameters
+> * > ***offset:*** 
+>   > Amount of indents relative to the current depth.
+
+#### Attributes
+> ***offset:*** 
+> Amount of indents relative to the current depth that will be
+>     output when this node is processed.
+
+---
+### codenode.nodes.indentation.AbsoluteIndentation
+
+> ```python
+> class AbsoluteIndentation: ...
+> ```
+> 
+> Nodes that represent indentation whitespace at the start of a line,
+> with a number of indents independent of the current depth.
+#### Methods
+> ##### `__init__`
+> ```python
+> class AbsoluteIndentation:
+>     def __init__(self, value: int): ...
+> ````
+> 
+> 
+> #### Parameters
+> * > ***value:*** 
+>   > Amount of indents.
+
+#### Attributes
+> ***value:*** 
+> Amount of indents that will be output when this node is processed.
+
+---
+### codenode.nodes.indentation.CurrentIndentation
+
+> ```python
+> class CurrentIndentation: ...
+> ```
+> 
+> Nodes that represent indentation whitespace at the start of a line,
+> with a number of indents equal to the current depth.
+---
+### codenode.debug.debug_patch
+
+> ```python
+> def debug_patch(writer_type: Type[codenode.writer.Writer]) -> Type[codenode.writer.Writer]: ...
+> ````
+> 
+> Creates a modified version of a writer type
+> which prints out some extra info when encountering
+> an error to give a better ballpark idea of what caused it.
+> 
+> 
+> #### Parameters
+> * > ***writer_type:*** 
+>   > Base writer type.
+> #### Returns
+> * > New child writer type with debug modifications.
+
+
+
