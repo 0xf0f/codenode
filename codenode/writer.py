@@ -12,13 +12,32 @@ if typing.TYPE_CHECKING:
 
 
 class WriterStack:
+    """
+    A stack of iterators.
+    Used by the Writer class to traverse node trees.
+
+    Each instance is intended to be used once then discarded.
+    """
     def __init__(self):
-        self.items = collections.deque()
+        self.items: collections.deque = collections.deque()
+        """
+        Current items in the stack.
+        """
 
     def push(self, node: 'NodeType'):
+        """
+        Converts a node to an iterator then places it at
+        the top of the stack.
+
+        :param node: thing
+        """
         self.items.append(iter(node))
 
     def __iter__(self) -> 'Iterable[NodeType]':
+        """
+        Continually iterates the top iterator in the stack's item,
+        popping each iterator off when they have no items left.
+        """
         while self.items:
             try:
                 yield next(self.items[-1])
@@ -27,6 +46,13 @@ class WriterStack:
 
 
 class Writer:
+    """
+    Processes node trees into strings then writes out the result.
+
+    Each instance is intended to be used once then discarded.
+    After a single call to either dump or dumps, the Writer
+    instance is no longer useful.
+    """
     def __init__(
             self,
             node: 'NodeType', *,
@@ -34,17 +60,29 @@ class Writer:
             newline='\n',
             depth=0,
     ):
+        """
+        :param node: Base node of node tree.
+        :param indentation: Initial string used for indents in the output.
+        :param newline: Initial string used for newlines in the output.
+        :param depth: Base depth (i.e. number of indents) to start at.
+        """
         self.node = node
+        "Base node of node tree"
+
         self.stack = WriterStack()
+        "WriterStack used to iterate over the node tree"
         self.stack.push((node,))
 
         self.indentation = indentation
+        "Current string used for indents in the output"
         self.newline = newline
+        "Current string used for line termination in the output"
         self.depth = depth
+        "Current output depth (i.e. number of indents)"
 
     def process_node(self, node) -> 'Iterable[str]':
         """
-        yield strings representing a node and/or apply any of its
+        Yield strings representing a node and/or apply any of its
         associated side effects to the writer
 
         for example:
@@ -78,11 +116,21 @@ class Writer:
                 ) from error
 
     def dump(self, stream):
+        """
+        Process and write out a node tree to a stream.
+
+        :param stream: An object with a 'write' method.
+        """
         for node in self.stack:
             for chunk in self.process_node(node):
                 stream.write(chunk)
 
     def dumps(self):
+        """
+        Process and write out a node tree as a string.
+
+        :return: String representation of node tree.
+        """
         buffer = io.StringIO()
         self.dump(buffer)
         return buffer.getvalue()

@@ -63,7 +63,15 @@ def print_writer_stack(writer: Writer, stream):
         stream.write('\n')
 
 
-def debug_patch(writer_type: typing.Type[Writer]):
+def debug_patch(writer_type: typing.Type[Writer]) -> typing.Type[Writer]:
+    """
+    Creates a modified version of a writer type
+    which prints out some extra info when encountering
+    an error to give a better ballpark idea of what caused it.
+
+    :param writer_type: Base writer type.
+    :return: New child writer type with debug modifications.
+    """
     class PatchedWriter(writer_type):
         @property
         def stack(self):
