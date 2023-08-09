@@ -311,10 +311,15 @@ Some modules with helper classes and functions are also provided:
 > def empty_lines(count: int) -> 'tuple[Newline, ...]': ...
 > ````
 > 
+> Convenience function that returns a tuple of newline nodes.
 > 
-> :param count:
-> :return:
 > 
+> #### Parameters
+> * > ***count:*** 
+>   > Number of newlines.
+> #### Returns
+> * > Tuple of newlines.
+
 
 ---
 ### codenode.indented
@@ -323,10 +328,16 @@ Some modules with helper classes and functions are also provided:
 > def indented(*nodes) -> tuple: ...
 > ````
 > 
+> Convenience function that returns a tuple containing an indent node,
+> some inner nodes, and a dedent node.
 > 
-> :param nodes:
-> :return:
 > 
+> #### Parameters
+> * > ***nodes:*** 
+>   > inner nodes
+> #### Returns
+> * > tuple containing an indent node, inner nodes, and a dedent node.
+
 
 ---
 ### codenode.default_writer_type
