@@ -29,14 +29,15 @@ class WriterStack:
         Converts a node to an iterator then places it at
         the top of the stack.
 
-        :param node: thing
+        :param node: iterable node
         """
         self.items.append(iter(node))
 
     def __iter__(self) -> 'Iterable[NodeType]':
         """
-        Continually iterates the top iterator in the stack's item,
-        popping each iterator off when they have no items left.
+        Continually iterates the top iterator in the stack's items,
+        yielding each result then popping each iterator off when they
+        are exhausted.
         """
         while self.items:
             try:
