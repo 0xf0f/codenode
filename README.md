@@ -408,7 +408,7 @@ Some modules with helper classes and functions are also provided:
 > ##### `dump_iter`
 > ```python
 > class Writer:
->     def dump_iter(self): ...
+>     def dump_iter(self) -> 'Iterable[str]': ...
 > ````
 > 
 > Process and write out a node tree as an iterable of
