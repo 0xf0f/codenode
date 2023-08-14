@@ -154,11 +154,16 @@ Some modules with helper classes and functions are also provided:
     - contains general language agnostic helper functions and classes
   - codenode_python
     - contains helper classes and functions for generating python code
-  - codenode_cpp
-    - contains helper classes and functions for generating c++ code
-  - codenode_legacy
-    - helpers for code that relies on the old codenode API (below version 1.0)
-    - uses a previous, entirely different approach to nodes
+
+[comment]: <> (  - codenode_cpp)
+
+[comment]: <> (    - contains helper classes and functions for generating c++ code)
+
+[comment]: <> (  - codenode_legacy)
+
+[comment]: <> (    - helpers for code that relies on the old codenode API &#40;below version 1.0&#41;)
+
+[comment]: <> (    - uses a previous, entirely different approach to nodes)
 
 ### Reference
 > **Note**
