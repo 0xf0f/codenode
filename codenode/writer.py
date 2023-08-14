@@ -116,15 +116,24 @@ class Writer:
                     'of this type.'
                 ) from error
 
+    def dump_iter(self):
+        """
+        Process and write out a node tree as an iterable of
+        string chunks.
+
+        :return: Iterable of string chunks.
+        """
+        for node in self.stack:
+            yield from self.process_node(node)
+
     def dump(self, stream):
         """
         Process and write out a node tree to a stream.
 
         :param stream: An object with a 'write' method.
         """
-        for node in self.stack:
-            for chunk in self.process_node(node):
-                stream.write(chunk)
+        for chunk in self.dump_iter():
+            stream.write(chunk)
 
     def dumps(self):
         """

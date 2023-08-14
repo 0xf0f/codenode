@@ -83,9 +83,9 @@ def debug_patch(writer_type: typing.Type[Writer]) -> typing.Type[Writer]:
             stack.push = lambda node: push(DebugIterator(node))
             self._stack = stack
 
-        def dump(self, stream):
+        def dump_iter(self):
             try:
-                return super().dump(stream)
+                yield from super().dump_iter()
             except Exception as e:
                 buffer = io.StringIO()
                 buffer.write(''.join(map(str, e.args)))
