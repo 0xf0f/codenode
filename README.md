@@ -154,11 +154,16 @@ Some modules with helper classes and functions are also provided:
     - contains general language agnostic helper functions and classes
   - codenode_python
     - contains helper classes and functions for generating python code
-  - codenode_cpp
-    - contains helper classes and functions for generating c++ code
-  - codenode_legacy
-    - helpers for code that relies on the old codenode API (below version 1.0)
-    - uses a previous, entirely different approach to nodes
+
+[comment]: <> (  - codenode_cpp)
+
+[comment]: <> (    - contains helper classes and functions for generating c++ code)
+
+[comment]: <> (  - codenode_legacy)
+
+[comment]: <> (    - helpers for code that relies on the old codenode API &#40;below version 1.0&#41;)
+
+[comment]: <> (    - uses a previous, entirely different approach to nodes)
 
 ### Reference
 > **Note**
@@ -214,7 +219,7 @@ Some modules with helper classes and functions are also provided:
 >   > Base depth (i.e. number of indents) to start at.
 > * > ***debug:*** 
 >   > If True, will print out extra info when an error
->   >                   occurs to give a better idea of which node caused it.
+>   >                  occurs to give a better idea of which node caused it.
 
 ---
 ### codenode.dumps
@@ -237,11 +242,11 @@ Some modules with helper classes and functions are also provided:
 >   > Base depth (i.e. number of indents) to start at.
 > * > ***debug:*** 
 >   > If True, will print out extra info when an error
->   >                   occurs to give a better idea of which node caused it.
+>   >                  occurs to give a better idea of which node caused it.
 >   > 
 > #### Returns
 > * > String representation of node tree.
-
+> 
 
 ---
 ### codenode.line
@@ -259,8 +264,8 @@ Some modules with helper classes and functions are also provided:
 >   > content of line
 > #### Returns
 > * > tuple containing an indentation node, line content and
-             a newline node.
-
+>             a newline node.
+> 
 
 ---
 ### codenode.indent
@@ -302,7 +307,7 @@ Some modules with helper classes and functions are also provided:
 >   > contents of lines
 > #### Returns
 > * > tuple of lines
-
+> 
 
 ---
 ### codenode.empty_lines
@@ -319,7 +324,7 @@ Some modules with helper classes and functions are also provided:
 >   > Number of newlines.
 > #### Returns
 > * > Tuple of newlines.
-
+> 
 
 ---
 ### codenode.indented
@@ -337,7 +342,7 @@ Some modules with helper classes and functions are also provided:
 >   > inner nodes
 > #### Returns
 > * > tuple containing an indent node, inner nodes, and a dedent node.
-
+> 
 
 ---
 ### codenode.default_writer_type
@@ -398,7 +403,21 @@ Some modules with helper classes and functions are also provided:
 >   > node to be processed
 > #### Returns
 > * > strings of text chunks representing the node
+> 
 
+> ##### `dump_iter`
+> ```python
+> class Writer:
+>     def dump_iter(self): ...
+> ````
+> 
+> Process and write out a node tree as an iterable of
+> string chunks.
+> 
+> 
+> #### Returns
+> * > Iterable of string chunks.
+> 
 
 > ##### `dump`
 > ```python
@@ -424,7 +443,7 @@ Some modules with helper classes and functions are also provided:
 > 
 > #### Returns
 > * > String representation of node tree.
-
+> 
 
 #### Attributes
 > ***node:*** 
@@ -466,7 +485,7 @@ Some modules with helper classes and functions are also provided:
 > 
 > #### Parameters
 > * > ***node:*** 
->   > thing
+>   > iterable node
 
 > ##### `__iter__`
 > ```python
@@ -474,8 +493,9 @@ Some modules with helper classes and functions are also provided:
 >     def __iter__(self) -> 'Iterable[NodeType]': ...
 > ````
 > 
-> Continually iterates the top iterator in the stack's item,
-> popping each iterator off when they have no items left.
+> Continually iterates the top iterator in the stack's items,
+> yielding each result then popping each iterator off when they
+> are exhausted.
 > 
 
 #### Attributes
@@ -513,7 +533,7 @@ Some modules with helper classes and functions are also provided:
 >   > Current depth.
 > #### Returns
 > * > New depth.
-
+> 
 
 ---
 ### codenode.nodes.depth_change.RelativeDepthChange
@@ -588,8 +608,8 @@ Some modules with helper classes and functions are also provided:
 >   > Current depth.
 > #### Returns
 > * > Number of indents to include in whitespace when this
-        node is processed.
-
+>        node is processed.
+> 
 
 ---
 ### codenode.nodes.indentation.RelativeIndentation
@@ -656,7 +676,7 @@ Some modules with helper classes and functions are also provided:
 ### codenode.debug.debug_patch
 
 > ```python
-> def debug_patch(writer_type: Type[codenode.writer.Writer]) -> Type[codenode.writer.Writer]: ...
+> def debug_patch(writer_type: typing.Type[Writer]) -> typing.Type[Writer]: ...
 > ````
 > 
 > Creates a modified version of a writer type
@@ -669,6 +689,6 @@ Some modules with helper classes and functions are also provided:
 >   > Base writer type.
 > #### Returns
 > * > New child writer type with debug modifications.
-
+> 
 
 
