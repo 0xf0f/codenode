@@ -116,7 +116,7 @@ class Writer:
                     'of this type.'
                 ) from error
 
-    def dump_iter(self):
+    def dump_iter(self) -> 'Iterable[str]':
         """
         Process and write out a node tree as an iterable of
         string chunks.
