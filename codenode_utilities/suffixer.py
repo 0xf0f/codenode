@@ -21,7 +21,7 @@ def suffixer(
     def suffixed(node):
         output_lines = dumps(node).splitlines()
         max_line_length = max(map(len, output_lines))
-        for index, line_text in enumerate(output_lines):
+        for line_text in output_lines:
             yield indentation
             yield line_text
             yield ' ' * (max_line_length - len(line_text))
