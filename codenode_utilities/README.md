@@ -1,7 +1,6 @@
 ### Contents
 - [What is this?](#what-is-this)
 - [How do I install it?](#how-do-i-install-it)
-- [How do I use it?](#how-do-i-use-it)
 - [Reference](#reference)
 
 ### What is this?
@@ -13,8 +12,6 @@ This module is installed automatically alongside codenode.
 
 #### From GitHub:
 `pip install git+https://github.com/0xf0f/codenode`
-
-### How do I use it?
 
 ### Reference
 #### Contents
