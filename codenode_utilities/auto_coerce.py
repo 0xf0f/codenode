@@ -22,6 +22,6 @@ def auto_coerce_patch(
             try:
                 yield from super().process_node(node)
             except TypeError:
-                yield coerce(node)
+                yield from super().process_node(coerce(node))
 
     return PatchedWriter
