@@ -23,7 +23,7 @@ setup(
     url='https://github.com/0xf0f/codenode',
     license='MIT',
     author='0xf0f',
-    author_email='0x0meta@gmail.com',
+    author_email='0xf0f.dev@gmail.com',
     description='a simple framework for code generation',
     long_description=readme,
     long_description_content_type='text/markdown',
