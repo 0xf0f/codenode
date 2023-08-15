@@ -88,6 +88,7 @@ if __name__ == '__main__':
                 {
                     'reference_contents': codenode.dumps(reference_contents(), debug=True),
                     'reference': codenode.dumps(reference(), debug=True),
+                    'codenode_utilities_link': 'codenode_utilities/README.md'
                 }
             )
         )
