@@ -5,12 +5,12 @@
 - [Extensions](#extensions)
 - [Reference](#reference)
 
-### What is this?
+### What is this?<a id="what-is-this"></a>
 The goal of this module is to help write code that generates code. 
 Focus is placed on enabling the user to easily describe, 
 build and reason about code structures rapidly.
 
-### How do I install it?
+### How do I install it?<a id="how-do-i-install-it"></a>
 
 [comment]: <> (### From PyPI:)
 
@@ -19,7 +19,7 @@ build and reason about code structures rapidly.
 #### From GitHub:
 `pip install git+https://github.com/0xf0f/codenode`
 
-### How do I use it?
+### How do I use it?<a id="how-do-i-use-it"></a>
 Like the `json` and 
 `pickle` modules, `dump` and `dumps` are used to generate output. 
 Code can be built using any tree of iterables containing strings, 
@@ -142,7 +142,7 @@ iterables, such as itertools.
 - Building higher level structures from as many iterable building blocks
 as desired.
 
-### Extensions
+### Extensions<a id="extensions"></a>
 Module behaviour can be extended by overriding methods of the 
 `codenode.writer.Writer` and `codenode.writer.WriterStack` classes. An
 example of this can be seen in the `codenode.debug.debug_patch` 
@@ -167,7 +167,7 @@ Some modules with helper classes and functions are also provided:
 
 [comment]: <> (    - uses a previous, entirely different approach to nodes)
 
-### Reference
+### Reference<a id="reference"></a>
 > **Note**
 > This section of the readme was generated using codenode itself.
 > 

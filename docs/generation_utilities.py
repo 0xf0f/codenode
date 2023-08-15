@@ -179,7 +179,7 @@ class DocumentationContent:
         return getattr(module, attribute)
 
     def get_documentation(self):
-        yield line(f'### {self.path}')
+        yield line(f'### {self.path}<a id="{self.get_link()}"></a>')
         yield newline
         # yield line('---')
 
