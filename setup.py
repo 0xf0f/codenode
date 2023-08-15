@@ -1,16 +1,7 @@
-import sys
-
 from setuptools import setup
 
-if sys.version_info[1] < 9:
-    # readme generation uses some ast features only available in 3.9+
-    readme = (
-        "A simple framework for code generation. "
-        "View project info at https://github.com/0xf0f/codenode"
-    )
-else:
-    from docs import generate_pypi_readme
-    readme = generate_pypi_readme.run()
+with open('README.md') as file:
+    readme = file.read()
 
 setup(
     name='0xf0f-codenode',

@@ -2,11 +2,14 @@ import shutil
 import subprocess
 import pathlib
 
+from tools.publish_to_pypi import prepare_readme
+
 cd = pathlib.Path(__file__).absolute().parent
 
 
 def run():
     print('cd', cd)
+    prepare_readme()
 
     dist_folder = cd.parent / 'dist'
     build_folder = cd.parent / 'build'
