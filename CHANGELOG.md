@@ -8,9 +8,11 @@ using an indentation node, some strings, and a newline node.
 - Added some general helpful classes/functions in codenode_utilities
 - Rewrote readme.
 - Added documentation.
-- Added extra debugging help using the debug paramter
+- Added extra debugging help using the debug parameter
 in dump/dumps.
 - Fleshed out the project in general:
   - Added some tool scripts for development.
   - Added some basic tests.
+  - Added changelog.
+  - Added contributing guidelines.
 - Published on PyPI.
