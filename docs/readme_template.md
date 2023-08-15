@@ -150,7 +150,7 @@ function. The variable `codenode.default_writer_type` can be used to
 replace the `Writer` type used in `dump` and `dumps` with a custom one.
 
 Some modules with helper classes and functions are also provided:
-  - codenode_utilities
+  - [codenode_utilities](codenode_utilities/README.md)
     - contains general language agnostic helper functions and classes
 
 [comment]: <> (  - codenode_python)
