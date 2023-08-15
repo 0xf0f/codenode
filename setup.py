@@ -13,7 +13,7 @@ else:
     readme = generate_pypi_readme.run()
 
 setup(
-    name='codenode',
+    name='0xf0f-codenode',
     version='1.0',
     packages=find_packages(),
     url='https://github.com/0xf0f/codenode',
