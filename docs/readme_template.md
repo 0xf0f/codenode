@@ -12,9 +12,8 @@ build and reason about code structures rapidly.
 
 ### How do I install it?<a id="how-do-i-install-it"></a>
 
-[comment]: <> (### From PyPI:)
-
-[comment]: <> (`pip install 0xf0f-codenode`)
+### From PyPI:
+`pip install 0xf0f-codenode`
 
 #### From GitHub:
 `pip install git+https://github.com/0xf0f/codenode`

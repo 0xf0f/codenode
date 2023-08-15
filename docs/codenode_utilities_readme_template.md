@@ -10,6 +10,9 @@ and classes for generating content with codenode.
 ### How do I install it?
 This module is installed automatically alongside codenode.
 
+### From PyPI:
+`pip install 0xf0f-codenode`
+
 #### From GitHub:
 `pip install git+https://github.com/0xf0f/codenode`
 
