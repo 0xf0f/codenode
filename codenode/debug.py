@@ -68,6 +68,7 @@ def debug_patch(writer_type: typing.Type[Writer]) -> typing.Type[Writer]:
     Creates a modified version of a writer type
     which prints out some extra info when encountering
     an error to give a better ballpark idea of what caused it.
+    Used in codenode.dump/dumps to implement the debug parameter.
 
     :param writer_type: Base writer type.
     :return: New child writer type with debug modifications.
