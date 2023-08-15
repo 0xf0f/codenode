@@ -5,21 +5,20 @@
 - [Extensions](#extensions)
 - [Reference](#reference)
 
-### What is this?
+### What is this?<a id="what-is-this"></a>
 The goal of this module is to help write code that generates code. 
 Focus is placed on enabling the user to easily describe, 
 build and reason about code structures rapidly.
 
-### How do I install it?
+### How do I install it?<a id="how-do-i-install-it"></a>
 
-[comment]: <> (### From PyPI:)
-
-[comment]: <> (`pip install 0xf0f-codenode`)
+### From PyPI:
+`pip install 0xf0f-codenode`
 
 #### From GitHub:
 `pip install git+https://github.com/0xf0f/codenode`
 
-### How do I use it?
+### How do I use it?<a id="how-do-i-use-it"></a>
 Like the `json` and 
 `pickle` modules, `dump` and `dumps` are used to generate output. 
 Code can be built using any tree of iterables containing strings, 
@@ -142,7 +141,7 @@ iterables, such as itertools.
 - Building higher level structures from as many iterable building blocks
 as desired.
 
-### Extensions
+### Extensions<a id="extensions"></a>
 Module behaviour can be extended by overriding methods of the 
 `codenode.writer.Writer` and `codenode.writer.WriterStack` classes. An
 example of this can be seen in the `codenode.debug.debug_patch` 
@@ -167,7 +166,7 @@ Some modules with helper classes and functions are also provided:
 
 [comment]: <> (    - uses a previous, entirely different approach to nodes)
 
-### Reference
+### Reference<a id="reference"></a>
 > **Note**
 > This section of the readme was generated using codenode itself.
 > 
@@ -199,7 +198,7 @@ Some modules with helper classes and functions are also provided:
 
 
 ---
-### codenode.dump
+### codenode.dump<a id="codenodedump"></a>
 
 > ```python
 > def dump(node, stream, *, indentation='    ', newline='\n', depth=0, debug=False): ...
@@ -224,7 +223,7 @@ Some modules with helper classes and functions are also provided:
 >   >                  occurs to give a better idea of which node caused it.
 
 ---
-### codenode.dumps
+### codenode.dumps<a id="codenodedumps"></a>
 
 > ```python
 > def dumps(node, *, indentation='    ', newline='\n', depth=0, debug=False) -> str: ...
@@ -251,7 +250,7 @@ Some modules with helper classes and functions are also provided:
 > 
 
 ---
-### codenode.line
+### codenode.line<a id="codenodeline"></a>
 
 > ```python
 > def line(content: 'T') -> 'tuple[Indentation, T, Newline]': ...
@@ -270,31 +269,31 @@ Some modules with helper classes and functions are also provided:
 > 
 
 ---
-### codenode.indent
+### codenode.indent<a id="codenodeindent"></a>
 
 
 > A node representing a single increase in indentation level.
 
 ---
-### codenode.dedent
+### codenode.dedent<a id="codenodededent"></a>
 
 
 > A node representing a single decrease in indentation level.
 
 ---
-### codenode.newline
+### codenode.newline<a id="codenodenewline"></a>
 
 
 > A placeholder node for line terminators.
 
 ---
-### codenode.indentation
+### codenode.indentation<a id="codenodeindentation"></a>
 
 
 > A placeholder node for indentation whitespace at the start of a line.
 
 ---
-### codenode.lines
+### codenode.lines<a id="codenodelines"></a>
 
 > ```python
 > def lines(*items) -> tuple[tuple, ...]: ...
@@ -312,7 +311,7 @@ Some modules with helper classes and functions are also provided:
 > 
 
 ---
-### codenode.empty_lines
+### codenode.empty_lines<a id="codenodeempty_lines"></a>
 
 > ```python
 > def empty_lines(count: int) -> 'tuple[Newline, ...]': ...
@@ -329,7 +328,7 @@ Some modules with helper classes and functions are also provided:
 > 
 
 ---
-### codenode.indented
+### codenode.indented<a id="codenodeindented"></a>
 
 > ```python
 > def indented(*nodes) -> tuple: ...
@@ -347,13 +346,13 @@ Some modules with helper classes and functions are also provided:
 > 
 
 ---
-### codenode.default_writer_type
+### codenode.default_writer_type<a id="codenodedefault_writer_type"></a>
 
 
 > Default Writer type used in codenode.dump and codenode.dumps.
 
 ---
-### codenode.writer.Writer
+### codenode.writer.Writer<a id="codenodewriterwriter"></a>
 
 > ```python
 > class Writer: ...
@@ -464,7 +463,7 @@ Some modules with helper classes and functions are also provided:
 > Current output depth (i.e. number of indents)
 
 ---
-### codenode.writer.WriterStack
+### codenode.writer.WriterStack<a id="codenodewriterwriterstack"></a>
 
 > ```python
 > class WriterStack: ...
@@ -505,7 +504,7 @@ Some modules with helper classes and functions are also provided:
 > Current items in the stack.
 
 ---
-### codenode.nodes.newline.Newline
+### codenode.nodes.newline.Newline<a id="codenodenodesnewlinenewline"></a>
 
 > ```python
 > class Newline: ...
@@ -513,7 +512,7 @@ Some modules with helper classes and functions are also provided:
 > 
 > Nodes that represent the end of a line.
 ---
-### codenode.nodes.depth_change.DepthChange
+### codenode.nodes.depth_change.DepthChange<a id="codenodenodesdepth_changedepthchange"></a>
 
 > ```python
 > class DepthChange: ...
@@ -538,7 +537,7 @@ Some modules with helper classes and functions are also provided:
 > 
 
 ---
-### codenode.nodes.depth_change.RelativeDepthChange
+### codenode.nodes.depth_change.RelativeDepthChange<a id="codenodenodesdepth_changerelativedepthchange"></a>
 
 > ```python
 > class RelativeDepthChange: ...
@@ -564,7 +563,7 @@ Some modules with helper classes and functions are also provided:
 >     processed.
 
 ---
-### codenode.nodes.depth_change.AbsoluteDepthChange
+### codenode.nodes.depth_change.AbsoluteDepthChange<a id="codenodenodesdepth_changeabsolutedepthchange"></a>
 
 > ```python
 > class AbsoluteDepthChange: ...
@@ -590,7 +589,7 @@ Some modules with helper classes and functions are also provided:
 >     processed.
 
 ---
-### codenode.nodes.indentation.Indentation
+### codenode.nodes.indentation.Indentation<a id="codenodenodesindentationindentation"></a>
 
 > ```python
 > class Indentation: ...
@@ -614,7 +613,7 @@ Some modules with helper classes and functions are also provided:
 > 
 
 ---
-### codenode.nodes.indentation.RelativeIndentation
+### codenode.nodes.indentation.RelativeIndentation<a id="codenodenodesindentationrelativeindentation"></a>
 
 > ```python
 > class RelativeIndentation: ...
@@ -641,7 +640,7 @@ Some modules with helper classes and functions are also provided:
 >     output when this node is processed.
 
 ---
-### codenode.nodes.indentation.AbsoluteIndentation
+### codenode.nodes.indentation.AbsoluteIndentation<a id="codenodenodesindentationabsoluteindentation"></a>
 
 > ```python
 > class AbsoluteIndentation: ...
@@ -666,7 +665,7 @@ Some modules with helper classes and functions are also provided:
 > Amount of indents that will be output when this node is processed.
 
 ---
-### codenode.nodes.indentation.CurrentIndentation
+### codenode.nodes.indentation.CurrentIndentation<a id="codenodenodesindentationcurrentindentation"></a>
 
 > ```python
 > class CurrentIndentation: ...
@@ -675,7 +674,7 @@ Some modules with helper classes and functions are also provided:
 > Nodes that represent indentation whitespace at the start of a line,
 > with a number of indents equal to the current depth.
 ---
-### codenode.debug.debug_patch
+### codenode.debug.debug_patch<a id="codenodedebugdebug_patch"></a>
 
 > ```python
 > def debug_patch(writer_type: typing.Type[Writer]) -> typing.Type[Writer]: ...

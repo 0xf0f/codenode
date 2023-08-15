@@ -10,6 +10,9 @@ and classes for generating content with codenode.
 ### How do I install it?
 This module is installed automatically alongside codenode.
 
+### From PyPI:
+`pip install 0xf0f-codenode`
+
 #### From GitHub:
 `pip install git+https://github.com/0xf0f/codenode`
 
@@ -24,7 +27,7 @@ This module is installed automatically alongside codenode.
 
 
 ---
-### codenode_utilities.PartitionedNode
+### codenode_utilities.PartitionedNode<a id="codenode_utilitiespartitionednode"></a>
 
 > ```python
 > class PartitionedNode: ...
@@ -150,7 +153,7 @@ This module is installed automatically alongside codenode.
 > Node in the body section.
 
 ---
-### codenode_utilities.joined
+### codenode_utilities.joined<a id="codenode_utilitiesjoined"></a>
 
 > ```python
 > def joined(nodes, *, start='', separator=newline, end=newline): ...
@@ -175,7 +178,7 @@ This module is installed automatically alongside codenode.
 > 
 
 ---
-### codenode_utilities.node_transformer
+### codenode_utilities.node_transformer<a id="codenode_utilitiesnode_transformer"></a>
 
 > ```python
 > def node_transformer(func): ...
@@ -194,7 +197,7 @@ This module is installed automatically alongside codenode.
 > 
 
 ---
-### codenode_utilities.prefixer
+### codenode_utilities.prefixer<a id="codenode_utilitiesprefixer"></a>
 
 > ```python
 > def prefixer(prefix: str): ...
@@ -216,7 +219,7 @@ This module is installed automatically alongside codenode.
 > 
 
 ---
-### codenode_utilities.suffixer
+### codenode_utilities.suffixer<a id="codenode_utilitiessuffixer"></a>
 
 > ```python
 > def suffixer(suffix: str, dumps=lambda node: codenode.dumps(node)): ...
@@ -239,7 +242,7 @@ This module is installed automatically alongside codenode.
 > 
 
 ---
-### codenode_utilities.auto_coerce_patch
+### codenode_utilities.auto_coerce_patch<a id="codenode_utilitiesauto_coerce_patch"></a>
 
 > ```python
 > def auto_coerce_patch(writer_type: T, coerce=str) -> T: ...
