@@ -1,6 +1,6 @@
 import sys
 
-from setuptools import setup, find_packages
+from setuptools import setup
 
 if sys.version_info[1] < 9:
     # readme generation uses some ast features only available in 3.9+
@@ -15,7 +15,11 @@ else:
 setup(
     name='0xf0f-codenode',
     version='1.0',
-    packages=find_packages(),
+    packages=[
+        'codenode',
+        'codenode.nodes',
+        'codenode_utilities',
+    ],
     url='https://github.com/0xf0f/codenode',
     license='MIT',
     author='0xf0f',
