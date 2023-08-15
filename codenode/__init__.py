@@ -32,7 +32,7 @@ def line(content: 'T') -> 'tuple[Indentation, T, Newline]':
     return indentation, content, newline
 
 
-def lines(*items) -> tuple[tuple, ...]:
+def lines(*items) -> 'tuple[tuple, ...]':
     """
     Convenience function that returns a tuple of lines,
     where each argument is the content of one line.
