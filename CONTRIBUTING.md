@@ -12,7 +12,10 @@ a pull request to merge them.
 - Run `python -m tools.run_tests` to run tests.
 
 ## Generating docs
+- Changes to readmes should be done using the templates 
+in the docs/ folder
 - Run `python -m tools.generate_readmes` to create README files.
+- Must be run using python >=3.9
 
 ## Pushing to PyPI
 - Create and activate a venv, then install `twine` inside it
