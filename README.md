@@ -152,8 +152,10 @@ replace the `Writer` type used in `dump` and `dumps` with a custom one.
 Some modules with helper classes and functions are also provided:
   - codenode_utilities
     - contains general language agnostic helper functions and classes
-  - codenode_python
-    - contains helper classes and functions for generating python code
+
+[comment]: <> (  - codenode_python)
+
+[comment]: <> (    - contains helper classes and functions for generating python code)
 
 [comment]: <> (  - codenode_cpp)
 
