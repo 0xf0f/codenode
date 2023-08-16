@@ -152,9 +152,8 @@ Some modules with helper classes and functions are also provided:
   - [codenode_utilities](${codenode_utilities_link})
     - contains general language agnostic helper functions and classes
 
-[comment]: <> (  - codenode_python)
-
-[comment]: <> (    - contains helper classes and functions for generating python code)
+  - [codenode_python](https://github.com/0xf0f/codenode-python)
+    - contains helper classes and functions for generating python code
 
 [comment]: <> (  - codenode_cpp)
 
