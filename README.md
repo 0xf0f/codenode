@@ -12,7 +12,7 @@ build and reason about code structures rapidly.
 
 ### How do I install it?<a id="how-do-i-install-it"></a>
 
-### From PyPI:
+#### From PyPI:
 `pip install 0xf0f-codenode`
 
 #### From GitHub:
@@ -296,7 +296,7 @@ Some modules with helper classes and functions are also provided:
 ### codenode.lines<a id="codenodelines"></a>
 
 > ```python
-> def lines(*items) -> tuple[tuple, ...]: ...
+> def lines(*items) -> 'tuple[tuple, ...]': ...
 > ````
 > 
 > Convenience function that returns a tuple of lines,

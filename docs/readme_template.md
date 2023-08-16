@@ -12,7 +12,7 @@ build and reason about code structures rapidly.
 
 ### How do I install it?<a id="how-do-i-install-it"></a>
 
-### From PyPI:
+#### From PyPI:
 `pip install 0xf0f-codenode`
 
 #### From GitHub:
