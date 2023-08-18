@@ -138,13 +138,18 @@ def get_module_attribute_documentation(module: types.ModuleType):
                             attribute_docs[target.id] = {
                                 'description': b.value.value,
                                 'type': '',
+                                'code': ast.unparse(a),
                             }
                 elif isinstance(a, ast.AnnAssign):
                     if isinstance(a.target, ast.Name):
                         attribute_docs[a.target.id] = {
                             'description': b.value.value,
                             'type': ast.unparse(a.annotation),
+                            'code': ast.unparse(a),
                         }
+                else:
+                    continue
+
         setattr(module, '__attribute_docs__', attribute_docs)
     return attribute_docs
 
@@ -163,9 +168,12 @@ def get_class_documentation(cls: typing.Type):
     }
 
 
+
+
 class DocumentationContent:
-    def __init__(self, path: str):
+    def __init__(self, path: str, include_source_link=False):
         self.path = path
+        self.include_source_link = include_source_link
 
     @functools.cache
     def get_module(self):
@@ -308,10 +316,14 @@ class AttributeDocumentation(DocumentationContent):
     def get_documentation(self):
         yield from super().get_documentation()
         module, _, name = self.path.rpartition('.')
-        docstring = get_module_attribute_documentation(self.get_module()).get(name, '')
-        if docstring:
+        documentation = get_module_attribute_documentation(self.get_module()).get(name, '')
+        if documentation:
             yield newline
-            yield quote_block(line(docstring['description']))
+            yield line('```python')
+            yield line(documentation['code'])
+            yield line('```')
+
+            yield quote_block(line(documentation['description']))
             yield newline
 
 

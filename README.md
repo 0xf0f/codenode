@@ -271,24 +271,36 @@ Some modules with helper classes and functions are also provided:
 ### codenode.indent<a id="codenodeindent"></a>
 
 
+```python
+indent = RelativeDepthChange(1)
+```
 > A node representing a single increase in indentation level.
 
 ---
 ### codenode.dedent<a id="codenodededent"></a>
 
 
+```python
+dedent = RelativeDepthChange(-1)
+```
 > A node representing a single decrease in indentation level.
 
 ---
 ### codenode.newline<a id="codenodenewline"></a>
 
 
+```python
+newline = Newline()
+```
 > A placeholder node for line terminators.
 
 ---
 ### codenode.indentation<a id="codenodeindentation"></a>
 
 
+```python
+indentation = CurrentIndentation()
+```
 > A placeholder node for indentation whitespace at the start of a line.
 
 ---
@@ -348,6 +360,9 @@ Some modules with helper classes and functions are also provided:
 ### codenode.default_writer_type<a id="codenodedefault_writer_type"></a>
 
 
+```python
+default_writer_type = Writer
+```
 > Default Writer type used in codenode.dump and codenode.dumps.
 
 ---
